@@ -1,0 +1,2529 @@
+<!DOCTYPE html>
+<!-- saved from url=(0059)file:///C:/Users/a_bos/Downloads/fifa-wc2026-tracker_5.html -->
+<html lang="en" data-theme="light"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FIFA World Cup 2026 — Match Tracker</title>
+<link href="./FIFA World Cup 2026 — Match Tracker_files/css2" rel="stylesheet">
+<style>
+/* ════════════════════════════════════════
+   DESIGN TOKENS
+════════════════════════════════════════ */
+[data-theme="dark"]{
+  --bg:#07111F; --surface:#0E1C2F; --card:#122030; --card-h:#162638;
+  --border:#1A2E47; --border-h:#264260;
+  --text:#EBE5D8; --text-2:#7B94B0; --text-3:#3A5270;
+  --gold:#C9A84C; --gold-2:#E8C96A; --gold-3:rgba(201,168,76,0.15);
+  --gold-border:rgba(201,168,76,0.28);
+  --green:#18B860; --blue:#3A8FE6; --red:#E04040; --purple:#A855F7;
+  --nav-bg:rgba(7,17,31,0.95);
+  --inp-bg:rgba(201,168,76,0.08); --inp-border:rgba(201,168,76,0.35); --inp-focus:rgba(201,168,76,0.6);
+  --hero-grad:linear-gradient(180deg,rgba(7,17,31,0.1) 0%,rgba(7,17,31,0.6) 50%,#07111F 100%);
+  --cover-grad:linear-gradient(180deg,transparent 25%,rgba(7,17,31,0.9) 100%);
+  --shadow:0 1px 3px rgba(0,0,0,0.4),0 4px 16px rgba(0,0,0,0.3);
+  --shadow-gold:0 0 0 1px rgba(201,168,76,0.2),0 4px 20px rgba(201,168,76,0.12);
+  --sep-color:rgba(201,168,76,0.5);
+  --sync-bg:rgba(201,168,76,0.06);
+}
+[data-theme="light"]{
+  --bg:#EDE7D4; --surface:#E5DEC9; --card:#FBF6E9; --card-h:#FFF8EE;
+  --border:#CEC3A4; --border-h:#A8936A;
+  --text:#1A120A; --text-2:#5A4830; --text-3:#9C8A6A;
+  --gold:#7A5008; --gold-2:#9B6A18; --gold-3:rgba(122,80,8,0.08);
+  --gold-border:rgba(122,80,8,0.3);
+  --green:#166B32; --blue:#174EA6; --red:#B82020; --purple:#7C3AED;
+  --nav-bg:rgba(237,231,212,0.96);
+  --inp-bg:rgba(122,80,8,0.06); --inp-border:rgba(122,80,8,0.38); --inp-focus:rgba(122,80,8,0.65);
+  --hero-grad:linear-gradient(180deg,rgba(237,231,212,0.05) 0%,rgba(237,231,212,0.6) 55%,#EDE7D4 100%);
+  --cover-grad:linear-gradient(180deg,transparent 25%,rgba(237,231,212,0.92) 100%);
+  --shadow:0 1px 3px rgba(0,0,0,0.06),0 4px 12px rgba(100,70,20,0.08);
+  --shadow-gold:0 0 0 1px rgba(122,80,8,0.15),0 4px 16px rgba(122,80,8,0.1);
+  --sep-color:rgba(122,80,8,0.4);
+  --sync-bg:rgba(122,80,8,0.05);
+}
+
+/* ════════════════════════════════════════
+   RESET
+════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+body{font-family:'Outfit',sans-serif;font-size:15px;line-height:1.5;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s;}
+
+/* ════════════════════════════════════════
+   HERO
+════════════════════════════════════════ */
+.hero{position:relative;height:420px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;text-align:center;overflow:hidden;padding-bottom:48px;}
+.hero-img,.hero-img-next{position:absolute;inset:0;background-size:cover;background-position:center 35%;transition:opacity 1.5s ease;}
+.hero-img-next{opacity:0;}
+.hero-ov{position:absolute;inset:0;background:var(--hero-grad);z-index:1;transition:background .3s;}
+.hero-c{position:relative;z-index:2;}
+.hero-badge{display:inline-block;font-family:'Rajdhani',sans-serif;font-size:10px;font-weight:700;letter-spacing:5px;color:var(--gold);border:1px solid var(--gold-border);background:var(--gold-3);backdrop-filter:blur(10px);padding:5px 20px;border-radius:2px;margin-bottom:16px;animation:fUp .6s ease both;}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(56px,10vw,120px);line-height:.9;letter-spacing:2px;animation:fUp .7s .1s ease both;}
+[data-theme="dark"] .hero h1{background:linear-gradient(155deg,#fff 15%,var(--gold) 85%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+[data-theme="light"] .hero h1{background:linear-gradient(155deg,#1A120A 15%,var(--gold) 85%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-sub{font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:600;letter-spacing:4px;color:var(--text-2);margin-top:10px;animation:fUp .7s .2s ease both;}
+.hero-pills{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap;justify-content:center;animation:fUp .7s .3s ease both;}
+.hero-pill{font-size:13px;color:var(--text);background:rgba(0,0,0,.25);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.12);border-radius:100px;padding:7px 18px;}
+[data-theme="light"] .hero-pill{background:rgba(255,255,255,.4);border-color:rgba(0,0,0,.1);}
+
+/* ════════════════════════════════════════
+   NAV
+════════════════════════════════════════ */
+.nav-bar{position:sticky;top:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;transition:background .3s,border-color .3s;}
+.nav-tabs{display:flex;flex:1;overflow-x:auto;scrollbar-width:none;padding:0 8px;}
+.nav-tabs::-webkit-scrollbar{display:none;}
+.tab-btn{font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;padding:16px 20px;border:none;background:none;color:var(--text-2);cursor:pointer;white-space:nowrap;position:relative;transition:color .2s;}
+.tab-btn.active{color:var(--gold);}
+.tab-btn.active::after{content:'';position:absolute;bottom:0;left:16px;right:16px;height:2px;background:var(--gold);border-radius:1px 1px 0 0;}
+.tab-btn:hover:not(.active){color:var(--text);}
+.theme-btn{width:52px;height:28px;margin-right:16px;flex-shrink:0;border-radius:14px;border:1px solid var(--border-h);background:var(--surface);cursor:pointer;position:relative;transition:background .3s;}
+.theme-btn::before{content:'';position:absolute;left:4px;top:4px;width:18px;height:18px;border-radius:50%;background:var(--gold);transition:transform .3s cubic-bezier(.34,1.56,.64,1);}
+[data-theme="light"] .theme-btn::before{transform:translateX(24px);}
+.theme-icons{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 6px;pointer-events:none;font-size:11px;}
+
+/* ════════════════════════════════════════
+   PAGE CONTAINER
+════════════════════════════════════════ */
+.main{max-width:1200px;margin:0 auto;padding:28px 24px 80px;}
+.section{display:none;}
+.section.active{display:block;animation:fadeIn .25s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* ════════════════════════════════════════
+   TAB COVER
+════════════════════════════════════════ */
+.tab-cover{position:relative;height:188px;border-radius:10px;overflow:hidden;margin-bottom:24px;border:1px solid var(--border);}
+.tab-cover img{width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block;}
+.tab-cover-ov{position:absolute;inset:0;background:var(--cover-grad);}
+.tab-cover-title{position:absolute;bottom:18px;left:24px;z-index:2;}
+.tab-cover-title h2{font-family:'Bebas Neue',sans-serif;font-size:48px;letter-spacing:2px;line-height:1;}
+[data-theme="dark"] .tab-cover-title h2{background:linear-gradient(140deg,#fff 20%,var(--gold) 85%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+[data-theme="light"] .tab-cover-title h2{background:linear-gradient(140deg,#1A120A 20%,var(--gold) 85%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.tab-cover-title p{font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:700;letter-spacing:2.5px;color:rgba(255,255,255,.65);margin-top:4px;}
+[data-theme="light"] .tab-cover-title p{color:var(--text-2);}
+
+/* ════════════════════════════════════════
+   SYNC BAR
+════════════════════════════════════════ */
+.sync-bar{display:flex;align-items:center;gap:12px;padding:10px 16px;background:var(--sync-bg);border:1px solid var(--gold-border);border-radius:6px;margin-bottom:20px;}
+.sync-dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0;animation:pulse 2s infinite;}
+.sync-dot.err{background:var(--text-3);animation:none;}
+.sync-info{flex:1;font-size:13px;color:var(--text-2);}
+.sync-info b{color:var(--gold);font-weight:600;}
+.sync-time{font-size:11px;color:var(--text-3);white-space:nowrap;}
+.sync-btn{font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;padding:5px 14px;border:1px solid var(--gold-border);background:var(--gold-3);color:var(--gold);border-radius:3px;cursor:pointer;white-space:nowrap;transition:background .2s;}
+.sync-btn:hover{background:rgba(201,168,76,.18);}
+
+/* ════════════════════════════════════════
+   TOOLBAR  (stats + filter on same line)
+════════════════════════════════════════ */
+.toolbar{
+  display:grid;
+  grid-template-columns:repeat(5,80px) 1fr;
+  gap:8px;
+  margin-bottom:20px;
+  align-items:stretch;
+}
+.stat-card{
+  background:var(--card);border:1px solid var(--border);border-radius:8px;
+  padding:14px 8px;text-align:center;
+  box-shadow:var(--shadow);
+  transition:transform .2s,box-shadow .2s,background .3s,border-color .3s;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+.stat-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-gold);}
+.stat-val{font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--gold);line-height:1;}
+.stat-label{font-family:'Rajdhani',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;color:var(--text-2);margin-top:2px;}
+.filter-panel{
+  background:var(--card);border:1px solid var(--border);border-radius:8px;
+  box-shadow:var(--shadow);
+  padding:0 16px;
+  display:flex;align-items:center;gap:6px;
+  flex-wrap:wrap;
+}
+.filter-btn{
+  font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;
+  padding:7px 14px;border-radius:4px;
+  border:1px solid transparent;background:transparent;
+  color:var(--text-2);cursor:pointer;white-space:nowrap;
+  transition:all .15s;
+}
+.filter-btn:hover{color:var(--text);background:var(--surface);}
+.filter-btn.active{background:var(--gold-3);border-color:var(--gold-border);color:var(--gold);}
+
+/* ════════════════════════════════════════
+   MATCH LIST
+════════════════════════════════════════ */
+.match-grid{display:flex;flex-direction:column;gap:5px;}
+.stage-sep{
+  font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:3px;
+  color:var(--sep-color);padding:24px 0 8px;
+  display:flex;align-items:center;gap:12px;
+}
+.stage-sep::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* 5-col grid: date | home | score | away | venue */
+.match-card{
+  background:var(--card);border:1px solid var(--border);border-radius:7px;
+  display:grid;
+  grid-template-columns:110px 1fr 148px 1fr 96px;
+  align-items:center;gap:0;
+  box-shadow:var(--shadow);
+  transition:border-color .18s,background .18s,transform .15s;
+  overflow:hidden;
+}
+.match-card:hover{border-color:var(--border-h);background:var(--card-h);transform:translateX(2px);}
+.match-card.finished{border-left:2px solid var(--green);}
+
+/* column cells with consistent padding */
+.mc-date{padding:14px 16px;border-right:1px solid var(--border);display:flex;flex-direction:column;gap:3px;flex-shrink:0;}
+.mc-num{font-family:'Rajdhani',sans-serif;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--text-3);display:flex;align-items:center;gap:6px;}
+.mc-day{font-size:13px;font-weight:600;color:var(--text);}
+.mc-time{font-size:11px;color:var(--text-2);}
+
+.mc-home{padding:14px 20px 14px 16px;text-align:right;font-size:15px;font-weight:500;}
+.mc-away{padding:14px 16px 14px 20px;text-align:left;font-size:15px;font-weight:500;}
+
+.mc-score{
+  border-left:1px solid var(--border);border-right:1px solid var(--border);
+  padding:10px 12px;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  background:var(--surface);
+}
+.score-inp{
+  width:44px;height:42px;
+  background:var(--inp-bg);border:1.5px solid var(--inp-border);border-radius:5px;
+  text-align:center;font-family:'Bebas Neue',sans-serif;font-size:26px;
+  color:var(--gold-2);outline:none;
+  transition:border-color .2s,box-shadow .2s,background .2s;
+  -moz-appearance:textfield;
+}
+.score-inp::-webkit-inner-spin-button,.score-inp::-webkit-outer-spin-button{-webkit-appearance:none;}
+.score-inp:focus{border-color:var(--inp-focus);box-shadow:0 0 0 3px rgba(201,168,76,.1);background:rgba(201,168,76,.06);}
+.score-inp.dis{background:transparent;border-color:var(--border);color:var(--text-3);font-size:14px;cursor:not-allowed;opacity:.4;}
+.score-inp.auto-filled{border-color:var(--green);background:rgba(24,184,96,.07);}
+[data-theme="light"] .score-inp{color:var(--gold);}
+[data-theme="light"] .score-inp.auto-filled{background:rgba(22,107,50,.06);}
+.score-dash{font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--text-3);}
+.pen-sel{width:42px;background:rgba(58,143,230,.07);border:1px solid rgba(58,143,230,.28);border-radius:4px;color:var(--blue);font-family:'Rajdhani',sans-serif;font-size:10px;font-weight:700;padding:3px 4px;outline:none;cursor:pointer;transition:background .2s;}
+.pen-sel option{background:var(--card);}
+
+.mc-venue{padding:14px 16px;text-align:right;font-size:10px;color:var(--text-3);font-style:italic;line-height:1.5;border-left:1px solid var(--border);}
+
+.sbadge{font-family:'Rajdhani',sans-serif;font-size:9px;font-weight:700;letter-spacing:.8px;padding:1px 5px;border-radius:2px;display:inline-block;}
+.bg  {background:rgba(24,184,96,.12);color:var(--green);border:1px solid rgba(24,184,96,.22);}
+.br32{background:rgba(58,143,230,.12);color:var(--blue);border:1px solid rgba(58,143,230,.22);}
+.br16{background:rgba(201,168,76,.12);color:var(--gold);border:1px solid rgba(201,168,76,.22);}
+.bqf {background:rgba(224,64,64,.12);color:var(--red);border:1px solid rgba(224,64,64,.22);}
+.bsf {background:rgba(168,85,247,.12);color:var(--purple);border:1px solid rgba(168,85,247,.22);}
+.bfin{background:var(--gold-3);color:var(--gold-2);border:1px solid var(--gold-border);}
+
+/* ════════════════════════════════════════
+   STANDINGS GROUPS
+════════════════════════════════════════ */
+.legend{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:20px;}
+.leg{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-2);}
+.leg-b{width:3px;height:16px;border-radius:2px;flex-shrink:0;}
+
+.groups-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(275px,1fr));gap:14px;}
+.group-card{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;box-shadow:var(--shadow);transition:background .3s,border-color .3s;}
+.group-head{padding:12px 16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);position:relative;overflow:hidden;min-height:60px;}
+.group-head-img{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.09;transition:opacity .3s;}
+[data-theme="light"] .group-head-img{opacity:.06;}
+.group-card:hover .group-head-img{opacity:.16;}
+.group-letter{font-family:'Bebas Neue',sans-serif;font-size:30px;color:var(--gold);position:relative;z-index:1;line-height:1;}
+.group-meta{position:relative;z-index:1;}
+.group-name{font-family:'Bebas Neue',sans-serif;font-size:16px;color:var(--text);letter-spacing:1px;}
+.group-sub{font-family:'Rajdhani',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;color:var(--text-2);margin-top:1px;}
+
+.gtable{width:100%;border-collapse:collapse;}
+.gtable th{font-family:'Rajdhani',sans-serif;font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--text-3);text-align:center;padding:8px 4px 6px;border-bottom:1px solid var(--border);}
+.gtable th:first-child{text-align:left;padding-left:16px;}
+.gtable td{font-size:12px;text-align:center;padding:10px 4px;border-bottom:1px solid var(--border);transition:background .15s;}
+[data-theme="dark"] .gtable td{border-bottom-color:rgba(255,255,255,.025);}
+.gtable td:first-child{text-align:left;padding-left:16px;font-size:13px;font-weight:500;}
+.gtable tr:last-child td{border-bottom:none;}
+.gtable tbody tr:hover td{background:var(--card-h);}
+.rq1 td:first-child,.rq2 td:first-child{border-left:3px solid var(--green);}
+.rq3 td:first-child{border-left:3px solid var(--blue);}
+.rout td:first-child{border-left:3px solid transparent;}
+.rout td{color:var(--text-3);}
+.pts-v{font-weight:700;color:var(--gold-2);}
+[data-theme="light"] .pts-v{color:var(--gold);}
+.gdp{color:var(--green);} .gdn{color:var(--red);}
+
+/* ════════════════════════════════════════
+   BRACKET
+════════════════════════════════════════ */
+.bracket-wrap{overflow-x:auto;padding-bottom:16px;}
+.bk-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;min-width:860px;}
+.bk-col-label{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:2px;color:var(--gold);text-align:center;margin-bottom:10px;border-bottom:1px solid var(--gold-border);padding-bottom:6px;}
+.bk-m{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:10px 12px;margin-bottom:6px;transition:border-color .18s,background .3s;}
+.bk-m:hover{border-color:var(--border-h);}
+.bk-fin{border-color:var(--gold-border)!important;background:var(--gold-3)!important;}
+.bk-t{font-size:12px;font-weight:500;padding:2px 0;display:flex;justify-content:space-between;align-items:center;color:var(--text);gap:6px;}
+.bk-t.tbd{color:var(--text-3);font-style:italic;font-size:11px;}
+.bk-t.win{color:var(--gold-2);font-weight:700;}
+[data-theme="light"] .bk-t.win{color:var(--gold);}
+.bk-sc{font-family:'Bebas Neue',sans-serif;font-size:16px;color:var(--gold-2);flex-shrink:0;}
+[data-theme="light"] .bk-sc{color:var(--gold);}
+.bk-div{height:1px;background:var(--border);margin:4px 0;}
+.bk-info{font-size:9px;color:var(--text-3);margin-top:4px;font-style:italic;}
+.champ{border:2px solid var(--gold);border-radius:10px;padding:20px;text-align:center;margin-top:8px;background:var(--gold-3);box-shadow:var(--shadow-gold);transition:background .3s;}
+.champ-l{font-family:'Rajdhani',sans-serif;font-size:10px;font-weight:700;letter-spacing:3px;color:var(--gold);}
+.champ-n{font-family:'Bebas Neue',sans-serif;font-size:30px;color:var(--gold-2);margin-top:4px;}
+[data-theme="light"] .champ-n{color:var(--gold);}
+
+/* ════════════════════════════════════════
+   THIRD PLACE
+════════════════════════════════════════ */
+.tp-wrap{overflow-x:auto;border-radius:8px;border:1px solid var(--border);box-shadow:var(--shadow);}
+.tptable{width:100%;border-collapse:collapse;background:var(--card);}
+.tptable thead{background:var(--surface);}
+.tptable th{font-family:'Rajdhani',sans-serif;font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--text-3);text-align:center;padding:11px 8px;border-bottom:2px solid var(--border);}
+.tptable th:nth-child(-n+3){text-align:left;}
+.tptable td{font-size:13px;text-align:center;padding:11px 8px;border-bottom:1px solid var(--border);transition:background .15s;}
+.tptable td:nth-child(-n+3){text-align:left;}
+.tptable tbody tr:hover td{background:var(--card-h);}
+.tptable tbody tr:last-child td{border-bottom:none;}
+.qy td:nth-child(3){color:var(--gold-2);font-weight:600;}
+[data-theme="light"] .qy td:nth-child(3){color:var(--gold);}
+.qual-y{color:var(--green);font-weight:700;font-size:12px;}
+.qual-n{color:var(--text-3);font-size:12px;}
+.rk-n{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--gold);}
+.grp-t{font-family:'Bebas Neue',sans-serif;font-size:16px;color:var(--blue);}
+
+/* ════════════════════════════════════════
+   HOW TO USE
+════════════════════════════════════════ */
+.info-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:14px;}
+.info-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:22px 24px;box-shadow:var(--shadow);transition:background .3s,border-color .3s;}
+.info-card h3{font-family:'Rajdhani',sans-serif;font-size:10px;font-weight:700;letter-spacing:3px;color:var(--gold);margin-bottom:10px;}
+.info-card p,.info-card li{font-size:14px;color:var(--text-2);line-height:1.7;}
+.info-card ul{list-style:none;padding:0;}
+.info-card li{padding:3px 0 3px 16px;position:relative;}
+.info-card li::before{content:'›';position:absolute;left:0;color:var(--gold);}
+.ck-row{display:flex;align-items:center;gap:9px;font-size:14px;color:var(--text-2);margin-bottom:7px;}
+.ck-sw{width:11px;height:11px;border-radius:2px;flex-shrink:0;}
+
+/* ════════════════════════════════════════
+   SCROLLBAR
+════════════════════════════════════════ */
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border-h);border-radius:3px;}
+
+/* ════════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════════ */
+@media(max-width:900px){
+  .toolbar{grid-template-columns:repeat(5,1fr);grid-template-rows:auto auto;}
+  .filter-panel{grid-column:1/-1;padding:12px 16px;}
+}
+@media(max-width:640px){
+  .match-card{grid-template-columns:90px 1fr 128px 1fr;}
+  .mc-venue{display:none;}
+  .hero{height:340px;}
+  .tab-cover{height:150px;}
+  .tab-cover-title h2{font-size:36px;}
+  .toolbar{grid-template-columns:repeat(3,1fr);}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-img" id="himg-a" style="background-image: url(&quot;https://images.unsplash.com/photo-1553778263-73a83bab9b0c?w=1600&amp;q=80&quot;); opacity: 0;"></div>
+  <div class="hero-img-next" id="himg-b" style="background-image: url(&quot;https://images.unsplash.com/photo-1489944440615-453fc2b6a9a9?w=1600&amp;q=80&quot;); opacity: 1;"></div>
+  <div class="hero-ov"></div>
+  <div class="hero-c">
+    <div class="hero-badge">LIVE MATCH TRACKER</div>
+    <h1>FIFA WORLD CUP<br>2026</h1>
+    <div class="hero-sub">CANADA · MEXICO · UNITED STATES</div>
+    <div class="hero-pills">
+      <div class="hero-pill">📅 11 June – 19 July 2026</div>
+      <div class="hero-pill">⚽ 48 Teams · 104 Matches</div>
+      <div class="hero-pill">🏟 12 Groups · 16 Venues</div>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav-bar">
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="showTab(&#39;matches&#39;,this)">MATCHES</button>
+    <button class="tab-btn" onclick="showTab(&#39;standings&#39;,this)">STANDINGS</button>
+    <button class="tab-btn" onclick="showTab(&#39;bracket&#39;,this)">BRACKET</button>
+    <button class="tab-btn" onclick="showTab(&#39;third&#39;,this)">THIRD PLACE</button>
+    <button class="tab-btn" onclick="showTab(&#39;howto&#39;,this)">HOW TO USE</button>
+  </div>
+  <button class="theme-btn" onclick="toggleTheme()" title="Toggle theme">
+    <div class="theme-icons"><span>🌙</span><span>☀️</span></div>
+  </button>
+</nav>
+
+<div class="main">
+
+  <!-- ═══ MATCHES ═══ -->
+  <div id="tab-matches" class="section active">
+    <!-- Tab cover photo -->
+    <div class="tab-cover">
+      <img class="tab-cover-img" src="./FIFA World Cup 2026 — Match Tracker_files/photo-1574629810360-7efbbe195018" alt="Stadium crowd" loading="lazy">
+      <div class="tab-cover-ov"></div>
+      <div class="tab-cover-title">
+        <h2>MATCHES</h2>
+        <p>104 FIXTURES · ALL STAGES · CAIRO TIME (GMT+3)</p>
+      </div>
+    </div>
+
+    <!-- Sync banner -->
+    <div class="sync-bar" id="sync-bar">
+      <div class="sync-dot" id="sync-dot"></div>
+      <div class="sync-info" id="sync-info"><b>Live data</b> — auto-syncing from <b>openfootball / GitHub</b> · manual entries preserved</div>
+      <span class="sync-time" id="sync-time">No new scores · Last sync 01:54 PM</span>
+      <button class="sync-btn" onclick="fetchLive(true)">↻ REFRESH</button>
+    </div>
+
+    <!-- Toolbar: stats + filter on one line -->
+    <div class="toolbar">
+      <div class="stat-card"><div class="stat-val">104</div><div class="stat-label">MATCHES</div></div>
+      <div class="stat-card"><div class="stat-val">48</div><div class="stat-label">TEAMS</div></div>
+      <div class="stat-card"><div class="stat-val">12</div><div class="stat-label">GROUPS</div></div>
+      <div class="stat-card"><div class="stat-val" id="goals-v">0</div><div class="stat-label">GOALS</div></div>
+      <div class="stat-card"><div class="stat-val" id="played-v">0</div><div class="stat-label">PLAYED</div></div>
+      <div class="filter-panel">
+        <button class="filter-btn active" onclick="filterStage(&#39;all&#39;,this)">ALL</button>
+        <button class="filter-btn" onclick="filterStage(&#39;Group&#39;,this)">GROUP STAGE</button>
+        <button class="filter-btn" onclick="filterStage(&#39;Round of 32&#39;,this)">ROUND OF 32</button>
+        <button class="filter-btn" onclick="filterStage(&#39;Round of 16&#39;,this)">ROUND OF 16</button>
+        <button class="filter-btn" onclick="filterStage(&#39;Quarter&#39;,this)">QUARTERS</button>
+        <button class="filter-btn" onclick="filterStage(&#39;Semi&#39;,this)">SEMIS</button>
+        <button class="filter-btn" onclick="filterStage(&#39;Final&#39;,this)">FINAL</button>
+      </div>
+    </div>
+    <div class="match-grid" id="match-list"><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#1 <span class="sbadge bg">GRP A</span></div>
+        <div class="mc-day">Thu Jun 11</div>
+        <div class="mc-time">22:00 Cairo</div>
+      </div>
+      <div class="mc-home">Mexico</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-1" value="" placeholder="–" oninput="onScore(1)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-1" value="" placeholder="–" oninput="onScore(1)">
+        
+      </div>
+      <div class="mc-away">South Africa</div>
+      <div class="mc-venue">Mexico City</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#2 <span class="sbadge bg">GRP A</span></div>
+        <div class="mc-day">Fri Jun 12</div>
+        <div class="mc-time">05:00 Cairo</div>
+      </div>
+      <div class="mc-home">South Korea</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-2" value="" placeholder="–" oninput="onScore(2)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-2" value="" placeholder="–" oninput="onScore(2)">
+        
+      </div>
+      <div class="mc-away">Czechia</div>
+      <div class="mc-venue">Guadalajara</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#3 <span class="sbadge bg">GRP B</span></div>
+        <div class="mc-day">Fri Jun 12</div>
+        <div class="mc-time">22:00 Cairo</div>
+      </div>
+      <div class="mc-home">Canada</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-3" value="" placeholder="–" oninput="onScore(3)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-3" value="" placeholder="–" oninput="onScore(3)">
+        
+      </div>
+      <div class="mc-away">Bosnia &amp; Herzegovina</div>
+      <div class="mc-venue">Toronto</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#4 <span class="sbadge bg">GRP D</span></div>
+        <div class="mc-day">Sat Jun 13</div>
+        <div class="mc-time">04:00 Cairo</div>
+      </div>
+      <div class="mc-home">United States</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-4" value="" placeholder="–" oninput="onScore(4)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-4" value="" placeholder="–" oninput="onScore(4)">
+        
+      </div>
+      <div class="mc-away">Paraguay</div>
+      <div class="mc-venue">Los Angeles</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#5 <span class="sbadge bg">GRP B</span></div>
+        <div class="mc-day">Sat Jun 13</div>
+        <div class="mc-time">22:00 Cairo</div>
+      </div>
+      <div class="mc-home">Qatar</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-5" value="" placeholder="–" oninput="onScore(5)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-5" value="" placeholder="–" oninput="onScore(5)">
+        
+      </div>
+      <div class="mc-away">Switzerland</div>
+      <div class="mc-venue">San Francisco</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#6 <span class="sbadge bg">GRP C</span></div>
+        <div class="mc-day">Sun Jun 14</div>
+        <div class="mc-time">01:00 Cairo</div>
+      </div>
+      <div class="mc-home">Brazil</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-6" value="" placeholder="–" oninput="onScore(6)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-6" value="" placeholder="–" oninput="onScore(6)">
+        
+      </div>
+      <div class="mc-away">Morocco</div>
+      <div class="mc-venue">New York/NJ</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#7 <span class="sbadge bg">GRP C</span></div>
+        <div class="mc-day">Sun Jun 14</div>
+        <div class="mc-time">04:00 Cairo</div>
+      </div>
+      <div class="mc-home">Haiti</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-7" value="" placeholder="–" oninput="onScore(7)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-7" value="" placeholder="–" oninput="onScore(7)">
+        
+      </div>
+      <div class="mc-away">Scotland</div>
+      <div class="mc-venue">Boston</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#8 <span class="sbadge bg">GRP D</span></div>
+        <div class="mc-day">Sat Jun 13</div>
+        <div class="mc-time">07:00 Cairo</div>
+      </div>
+      <div class="mc-home">Australia</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-8" value="" placeholder="–" oninput="onScore(8)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-8" value="" placeholder="–" oninput="onScore(8)">
+        
+      </div>
+      <div class="mc-away">Türkiye</div>
+      <div class="mc-venue">Vancouver</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#9 <span class="sbadge bg">GRP E</span></div>
+        <div class="mc-day">Sun Jun 14</div>
+        <div class="mc-time">20:00 Cairo</div>
+      </div>
+      <div class="mc-home">Germany</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-9" value="" placeholder="–" oninput="onScore(9)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-9" value="" placeholder="–" oninput="onScore(9)">
+        
+      </div>
+      <div class="mc-away">Curaçao</div>
+      <div class="mc-venue">Houston</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#10 <span class="sbadge bg">GRP F</span></div>
+        <div class="mc-day">Sun Jun 14</div>
+        <div class="mc-time">23:00 Cairo</div>
+      </div>
+      <div class="mc-home">Netherlands</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-10" value="" placeholder="–" oninput="onScore(10)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-10" value="" placeholder="–" oninput="onScore(10)">
+        
+      </div>
+      <div class="mc-away">Japan</div>
+      <div class="mc-venue">Dallas</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#11 <span class="sbadge bg">GRP E</span></div>
+        <div class="mc-day">Mon Jun 15</div>
+        <div class="mc-time">02:00 Cairo</div>
+      </div>
+      <div class="mc-home">Ivory Coast</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-11" value="" placeholder="–" oninput="onScore(11)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-11" value="" placeholder="–" oninput="onScore(11)">
+        
+      </div>
+      <div class="mc-away">Ecuador</div>
+      <div class="mc-venue">Philadelphia</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#12 <span class="sbadge bg">GRP F</span></div>
+        <div class="mc-day">Mon Jun 15</div>
+        <div class="mc-time">05:00 Cairo</div>
+      </div>
+      <div class="mc-home">Sweden</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-12" value="" placeholder="–" oninput="onScore(12)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-12" value="" placeholder="–" oninput="onScore(12)">
+        
+      </div>
+      <div class="mc-away">Tunisia</div>
+      <div class="mc-venue">Monterrey</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#13 <span class="sbadge bg">GRP H</span></div>
+        <div class="mc-day">Mon Jun 15</div>
+        <div class="mc-time">19:00 Cairo</div>
+      </div>
+      <div class="mc-home">Spain</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-13" value="" placeholder="–" oninput="onScore(13)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-13" value="" placeholder="–" oninput="onScore(13)">
+        
+      </div>
+      <div class="mc-away">Cape Verde</div>
+      <div class="mc-venue">Atlanta</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#14 <span class="sbadge bg">GRP G</span></div>
+        <div class="mc-day">Mon Jun 15</div>
+        <div class="mc-time">22:00 Cairo</div>
+      </div>
+      <div class="mc-home">Belgium</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-14" value="" placeholder="–" oninput="onScore(14)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-14" value="" placeholder="–" oninput="onScore(14)">
+        
+      </div>
+      <div class="mc-away">Egypt</div>
+      <div class="mc-venue">Vancouver</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#15 <span class="sbadge bg">GRP H</span></div>
+        <div class="mc-day">Tue Jun 16</div>
+        <div class="mc-time">01:00 Cairo</div>
+      </div>
+      <div class="mc-home">Saudi Arabia</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-15" value="" placeholder="–" oninput="onScore(15)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-15" value="" placeholder="–" oninput="onScore(15)">
+        
+      </div>
+      <div class="mc-away">Uruguay</div>
+      <div class="mc-venue">Miami</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#16 <span class="sbadge bg">GRP G</span></div>
+        <div class="mc-day">Tue Jun 16</div>
+        <div class="mc-time">04:00 Cairo</div>
+      </div>
+      <div class="mc-home">Iran</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-16" value="" placeholder="–" oninput="onScore(16)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-16" value="" placeholder="–" oninput="onScore(16)">
+        
+      </div>
+      <div class="mc-away">New Zealand</div>
+      <div class="mc-venue">Los Angeles</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#17 <span class="sbadge bg">GRP I</span></div>
+        <div class="mc-day">Tue Jun 16</div>
+        <div class="mc-time">22:00 Cairo</div>
+      </div>
+      <div class="mc-home">France</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-17" value="" placeholder="–" oninput="onScore(17)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-17" value="" placeholder="–" oninput="onScore(17)">
+        
+      </div>
+      <div class="mc-away">Senegal</div>
+      <div class="mc-venue">New York/NJ</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#18 <span class="sbadge bg">GRP I</span></div>
+        <div class="mc-day">Wed Jun 17</div>
+        <div class="mc-time">01:00 Cairo</div>
+      </div>
+      <div class="mc-home">Iraq</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-18" value="" placeholder="–" oninput="onScore(18)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-18" value="" placeholder="–" oninput="onScore(18)">
+        
+      </div>
+      <div class="mc-away">Norway</div>
+      <div class="mc-venue">Boston</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#19 <span class="sbadge bg">GRP J</span></div>
+        <div class="mc-day">Wed Jun 17</div>
+        <div class="mc-time">04:00 Cairo</div>
+      </div>
+      <div class="mc-home">Argentina</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-19" value="" placeholder="–" oninput="onScore(19)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-19" value="" placeholder="–" oninput="onScore(19)">
+        
+      </div>
+      <div class="mc-away">Algeria</div>
+      <div class="mc-venue">Kansas City</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#20 <span class="sbadge bg">GRP J</span></div>
+        <div class="mc-day">Tue Jun 16</div>
+        <div class="mc-time">07:00 Cairo</div>
+      </div>
+      <div class="mc-home">Austria</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-20" value="" placeholder="–" oninput="onScore(20)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-20" value="" placeholder="–" oninput="onScore(20)">
+        
+      </div>
+      <div class="mc-away">Jordan</div>
+      <div class="mc-venue">San Francisco</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#21 <span class="sbadge bg">GRP K</span></div>
+        <div class="mc-day">Wed Jun 17</div>
+        <div class="mc-time">20:00 Cairo</div>
+      </div>
+      <div class="mc-home">Portugal</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-21" value="" placeholder="–" oninput="onScore(21)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-21" value="" placeholder="–" oninput="onScore(21)">
+        
+      </div>
+      <div class="mc-away">DR Congo</div>
+      <div class="mc-venue">Houston</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#22 <span class="sbadge bg">GRP L</span></div>
+        <div class="mc-day">Wed Jun 17</div>
+        <div class="mc-time">23:00 Cairo</div>
+      </div>
+      <div class="mc-home">England</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-22" value="" placeholder="–" oninput="onScore(22)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-22" value="" placeholder="–" oninput="onScore(22)">
+        
+      </div>
+      <div class="mc-away">Croatia</div>
+      <div class="mc-venue">Dallas</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#23 <span class="sbadge bg">GRP L</span></div>
+        <div class="mc-day">Thu Jun 18</div>
+        <div class="mc-time">02:00 Cairo</div>
+      </div>
+      <div class="mc-home">Ghana</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-23" value="" placeholder="–" oninput="onScore(23)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-23" value="" placeholder="–" oninput="onScore(23)">
+        
+      </div>
+      <div class="mc-away">Panama</div>
+      <div class="mc-venue">Toronto</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#24 <span class="sbadge bg">GRP K</span></div>
+        <div class="mc-day">Thu Jun 18</div>
+        <div class="mc-time">05:00 Cairo</div>
+      </div>
+      <div class="mc-home">Uzbekistan</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-24" value="" placeholder="–" oninput="onScore(24)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-24" value="" placeholder="–" oninput="onScore(24)">
+        
+      </div>
+      <div class="mc-away">Colombia</div>
+      <div class="mc-venue">Mexico City</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#25 <span class="sbadge bg">GRP A</span></div>
+        <div class="mc-day">Thu Jun 18</div>
+        <div class="mc-time">19:00 Cairo</div>
+      </div>
+      <div class="mc-home">Czechia</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-25" value="" placeholder="–" oninput="onScore(25)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-25" value="" placeholder="–" oninput="onScore(25)">
+        
+      </div>
+      <div class="mc-away">South Africa</div>
+      <div class="mc-venue">Atlanta</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#26 <span class="sbadge bg">GRP B</span></div>
+        <div class="mc-day">Thu Jun 18</div>
+        <div class="mc-time">22:00 Cairo</div>
+      </div>
+      <div class="mc-home">Switzerland</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-26" value="" placeholder="–" oninput="onScore(26)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-26" value="" placeholder="–" oninput="onScore(26)">
+        
+      </div>
+      <div class="mc-away">Bosnia &amp; Herzegovina</div>
+      <div class="mc-venue">Los Angeles</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#27 <span class="sbadge bg">GRP B</span></div>
+        <div class="mc-day">Fri Jun 19</div>
+        <div class="mc-time">01:00 Cairo</div>
+      </div>
+      <div class="mc-home">Canada</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-27" value="" placeholder="–" oninput="onScore(27)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-27" value="" placeholder="–" oninput="onScore(27)">
+        
+      </div>
+      <div class="mc-away">Qatar</div>
+      <div class="mc-venue">Vancouver</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#28 <span class="sbadge bg">GRP A</span></div>
+        <div class="mc-day">Fri Jun 19</div>
+        <div class="mc-time">04:00 Cairo</div>
+      </div>
+      <div class="mc-home">Mexico</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-28" value="" placeholder="–" oninput="onScore(28)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-28" value="" placeholder="–" oninput="onScore(28)">
+        
+      </div>
+      <div class="mc-away">South Korea</div>
+      <div class="mc-venue">Guadalajara</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#29 <span class="sbadge bg">GRP C</span></div>
+        <div class="mc-day">Sat Jun 20</div>
+        <div class="mc-time">01:00 Cairo</div>
+      </div>
+      <div class="mc-home">Scotland</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-29" value="" placeholder="–" oninput="onScore(29)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-29" value="" placeholder="–" oninput="onScore(29)">
+        
+      </div>
+      <div class="mc-away">Morocco</div>
+      <div class="mc-venue">Boston</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#30 <span class="sbadge bg">GRP C</span></div>
+        <div class="mc-day">Sat Jun 20</div>
+        <div class="mc-time">04:00 Cairo</div>
+      </div>
+      <div class="mc-home">Brazil</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-30" value="" placeholder="–" oninput="onScore(30)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-30" value="" placeholder="–" oninput="onScore(30)">
+        
+      </div>
+      <div class="mc-away">Haiti</div>
+      <div class="mc-venue">New York/NJ</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#31 <span class="sbadge bg">GRP D</span></div>
+        <div class="mc-day">Sat Jun 20</div>
+        <div class="mc-time">19:00 Cairo</div>
+      </div>
+      <div class="mc-home">United States</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-31" value="" placeholder="–" oninput="onScore(31)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-31" value="" placeholder="–" oninput="onScore(31)">
+        
+      </div>
+      <div class="mc-away">Australia</div>
+      <div class="mc-venue">Dallas</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#32 <span class="sbadge bg">GRP D</span></div>
+        <div class="mc-day">Sat Jun 20</div>
+        <div class="mc-time">22:00 Cairo</div>
+      </div>
+      <div class="mc-home">Paraguay</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-32" value="" placeholder="–" oninput="onScore(32)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-32" value="" placeholder="–" oninput="onScore(32)">
+        
+      </div>
+      <div class="mc-away">Türkiye</div>
+      <div class="mc-venue">Seattle</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#33 <span class="sbadge bg">GRP E</span></div>
+        <div class="mc-day">Sun Jun 21</div>
+        <div class="mc-time">01:00 Cairo</div>
+      </div>
+      <div class="mc-home">Germany</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-33" value="" placeholder="–" oninput="onScore(33)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-33" value="" placeholder="–" oninput="onScore(33)">
+        
+      </div>
+      <div class="mc-away">Ivory Coast</div>
+      <div class="mc-venue">Kansas City</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#34 <span class="sbadge bg">GRP E</span></div>
+        <div class="mc-day">Sun Jun 21</div>
+        <div class="mc-time">04:00 Cairo</div>
+      </div>
+      <div class="mc-home">Ecuador</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-34" value="" placeholder="–" oninput="onScore(34)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-34" value="" placeholder="–" oninput="onScore(34)">
+        
+      </div>
+      <div class="mc-away">Curaçao</div>
+      <div class="mc-venue">Houston</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#35 <span class="sbadge bg">GRP F</span></div>
+        <div class="mc-day">Sun Jun 21</div>
+        <div class="mc-time">19:00 Cairo</div>
+      </div>
+      <div class="mc-home">Netherlands</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-35" value="" placeholder="–" oninput="onScore(35)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-35" value="" placeholder="–" oninput="onScore(35)">
+        
+      </div>
+      <div class="mc-away">Sweden</div>
+      <div class="mc-venue">Miami</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#36 <span class="sbadge bg">GRP F</span></div>
+        <div class="mc-day">Sun Jun 21</div>
+        <div class="mc-time">22:00 Cairo</div>
+      </div>
+      <div class="mc-home">Japan</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-36" value="" placeholder="–" oninput="onScore(36)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-36" value="" placeholder="–" oninput="onScore(36)">
+        
+      </div>
+      <div class="mc-away">Tunisia</div>
+      <div class="mc-venue">Guadalajara</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#37 <span class="sbadge bg">GRP G</span></div>
+        <div class="mc-day">Mon Jun 22</div>
+        <div class="mc-time">01:00 Cairo</div>
+      </div>
+      <div class="mc-home">Belgium</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-37" value="" placeholder="–" oninput="onScore(37)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-37" value="" placeholder="–" oninput="onScore(37)">
+        
+      </div>
+      <div class="mc-away">New Zealand</div>
+      <div class="mc-venue">San Francisco</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#38 <span class="sbadge bg">GRP G</span></div>
+        <div class="mc-day">Mon Jun 22</div>
+        <div class="mc-time">04:00 Cairo</div>
+      </div>
+      <div class="mc-home">Egypt</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-38" value="" placeholder="–" oninput="onScore(38)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-38" value="" placeholder="–" oninput="onScore(38)">
+        
+      </div>
+      <div class="mc-away">Iran</div>
+      <div class="mc-venue">Atlanta</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#39 <span class="sbadge bg">GRP H</span></div>
+        <div class="mc-day">Mon Jun 22</div>
+        <div class="mc-time">19:00 Cairo</div>
+      </div>
+      <div class="mc-home">Spain</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-39" value="" placeholder="–" oninput="onScore(39)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-39" value="" placeholder="–" oninput="onScore(39)">
+        
+      </div>
+      <div class="mc-away">Uruguay</div>
+      <div class="mc-venue">Boston</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#40 <span class="sbadge bg">GRP H</span></div>
+        <div class="mc-day">Mon Jun 22</div>
+        <div class="mc-time">22:00 Cairo</div>
+      </div>
+      <div class="mc-home">Cape Verde</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-40" value="" placeholder="–" oninput="onScore(40)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-40" value="" placeholder="–" oninput="onScore(40)">
+        
+      </div>
+      <div class="mc-away">Saudi Arabia</div>
+      <div class="mc-venue">Seattle</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#41 <span class="sbadge bg">GRP I</span></div>
+        <div class="mc-day">Tue Jun 23</div>
+        <div class="mc-time">01:00 Cairo</div>
+      </div>
+      <div class="mc-home">France</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-41" value="" placeholder="–" oninput="onScore(41)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-41" value="" placeholder="–" oninput="onScore(41)">
+        
+      </div>
+      <div class="mc-away">Iraq</div>
+      <div class="mc-venue">Los Angeles</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#42 <span class="sbadge bg">GRP I</span></div>
+        <div class="mc-day">Tue Jun 23</div>
+        <div class="mc-time">04:00 Cairo</div>
+      </div>
+      <div class="mc-home">Senegal</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-42" value="" placeholder="–" oninput="onScore(42)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-42" value="" placeholder="–" oninput="onScore(42)">
+        
+      </div>
+      <div class="mc-away">Norway</div>
+      <div class="mc-venue">Philadelphia</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#43 <span class="sbadge bg">GRP J</span></div>
+        <div class="mc-day">Tue Jun 23</div>
+        <div class="mc-time">19:00 Cairo</div>
+      </div>
+      <div class="mc-home">Argentina</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-43" value="" placeholder="–" oninput="onScore(43)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-43" value="" placeholder="–" oninput="onScore(43)">
+        
+      </div>
+      <div class="mc-away">Austria</div>
+      <div class="mc-venue">New York/NJ</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#44 <span class="sbadge bg">GRP J</span></div>
+        <div class="mc-day">Tue Jun 23</div>
+        <div class="mc-time">22:00 Cairo</div>
+      </div>
+      <div class="mc-home">Algeria</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-44" value="" placeholder="–" oninput="onScore(44)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-44" value="" placeholder="–" oninput="onScore(44)">
+        
+      </div>
+      <div class="mc-away">Jordan</div>
+      <div class="mc-venue">Dallas</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#45 <span class="sbadge bg">GRP K</span></div>
+        <div class="mc-day">Wed Jun 24</div>
+        <div class="mc-time">01:00 Cairo</div>
+      </div>
+      <div class="mc-home">Portugal</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-45" value="" placeholder="–" oninput="onScore(45)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-45" value="" placeholder="–" oninput="onScore(45)">
+        
+      </div>
+      <div class="mc-away">Uzbekistan</div>
+      <div class="mc-venue">Vancouver</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#46 <span class="sbadge bg">GRP K</span></div>
+        <div class="mc-day">Wed Jun 24</div>
+        <div class="mc-time">04:00 Cairo</div>
+      </div>
+      <div class="mc-home">Colombia</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-46" value="" placeholder="–" oninput="onScore(46)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-46" value="" placeholder="–" oninput="onScore(46)">
+        
+      </div>
+      <div class="mc-away">DR Congo</div>
+      <div class="mc-venue">Kansas City</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#47 <span class="sbadge bg">GRP L</span></div>
+        <div class="mc-day">Wed Jun 24</div>
+        <div class="mc-time">19:00 Cairo</div>
+      </div>
+      <div class="mc-home">England</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-47" value="" placeholder="–" oninput="onScore(47)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-47" value="" placeholder="–" oninput="onScore(47)">
+        
+      </div>
+      <div class="mc-away">Ghana</div>
+      <div class="mc-venue">Miami</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#48 <span class="sbadge bg">GRP L</span></div>
+        <div class="mc-day">Wed Jun 24</div>
+        <div class="mc-time">22:00 Cairo</div>
+      </div>
+      <div class="mc-home">Croatia</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-48" value="" placeholder="–" oninput="onScore(48)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-48" value="" placeholder="–" oninput="onScore(48)">
+        
+      </div>
+      <div class="mc-away">Panama</div>
+      <div class="mc-venue">Toronto</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#49 <span class="sbadge bg">GRP A</span></div>
+        <div class="mc-day">Thu Jun 25</div>
+        <div class="mc-time">19:00 Cairo</div>
+      </div>
+      <div class="mc-home">Mexico</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-49" value="" placeholder="–" oninput="onScore(49)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-49" value="" placeholder="–" oninput="onScore(49)">
+        
+      </div>
+      <div class="mc-away">Czechia</div>
+      <div class="mc-venue">Mexico City</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#50 <span class="sbadge bg">GRP A</span></div>
+        <div class="mc-day">Thu Jun 25</div>
+        <div class="mc-time">19:00 Cairo</div>
+      </div>
+      <div class="mc-home">South Africa</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-50" value="" placeholder="–" oninput="onScore(50)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-50" value="" placeholder="–" oninput="onScore(50)">
+        
+      </div>
+      <div class="mc-away">South Korea</div>
+      <div class="mc-venue">Guadalajara</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#51 <span class="sbadge bg">GRP B</span></div>
+        <div class="mc-day">Thu Jun 25</div>
+        <div class="mc-time">22:00 Cairo</div>
+      </div>
+      <div class="mc-home">Canada</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-51" value="" placeholder="–" oninput="onScore(51)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-51" value="" placeholder="–" oninput="onScore(51)">
+        
+      </div>
+      <div class="mc-away">Switzerland</div>
+      <div class="mc-venue">Los Angeles</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#52 <span class="sbadge bg">GRP B</span></div>
+        <div class="mc-day">Thu Jun 25</div>
+        <div class="mc-time">22:00 Cairo</div>
+      </div>
+      <div class="mc-home">Qatar</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-52" value="" placeholder="–" oninput="onScore(52)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-52" value="" placeholder="–" oninput="onScore(52)">
+        
+      </div>
+      <div class="mc-away">Bosnia &amp; Herzegovina</div>
+      <div class="mc-venue">San Francisco</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#53 <span class="sbadge bg">GRP C</span></div>
+        <div class="mc-day">Fri Jun 26</div>
+        <div class="mc-time">19:00 Cairo</div>
+      </div>
+      <div class="mc-home">Brazil</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-53" value="" placeholder="–" oninput="onScore(53)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-53" value="" placeholder="–" oninput="onScore(53)">
+        
+      </div>
+      <div class="mc-away">Scotland</div>
+      <div class="mc-venue">Boston</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#54 <span class="sbadge bg">GRP C</span></div>
+        <div class="mc-day">Fri Jun 26</div>
+        <div class="mc-time">19:00 Cairo</div>
+      </div>
+      <div class="mc-home">Morocco</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-54" value="" placeholder="–" oninput="onScore(54)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-54" value="" placeholder="–" oninput="onScore(54)">
+        
+      </div>
+      <div class="mc-away">Haiti</div>
+      <div class="mc-venue">New York/NJ</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#55 <span class="sbadge bg">GRP D</span></div>
+        <div class="mc-day">Fri Jun 26</div>
+        <div class="mc-time">22:00 Cairo</div>
+      </div>
+      <div class="mc-home">United States</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-55" value="" placeholder="–" oninput="onScore(55)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-55" value="" placeholder="–" oninput="onScore(55)">
+        
+      </div>
+      <div class="mc-away">Türkiye</div>
+      <div class="mc-venue">Seattle</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#56 <span class="sbadge bg">GRP D</span></div>
+        <div class="mc-day">Fri Jun 26</div>
+        <div class="mc-time">22:00 Cairo</div>
+      </div>
+      <div class="mc-home">Paraguay</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-56" value="" placeholder="–" oninput="onScore(56)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-56" value="" placeholder="–" oninput="onScore(56)">
+        
+      </div>
+      <div class="mc-away">Australia</div>
+      <div class="mc-venue">Vancouver</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#57 <span class="sbadge bg">GRP E</span></div>
+        <div class="mc-day">Sat Jun 27</div>
+        <div class="mc-time">19:00 Cairo</div>
+      </div>
+      <div class="mc-home">Germany</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-57" value="" placeholder="–" oninput="onScore(57)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-57" value="" placeholder="–" oninput="onScore(57)">
+        
+      </div>
+      <div class="mc-away">Ecuador</div>
+      <div class="mc-venue">Houston</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#58 <span class="sbadge bg">GRP E</span></div>
+        <div class="mc-day">Sat Jun 27</div>
+        <div class="mc-time">19:00 Cairo</div>
+      </div>
+      <div class="mc-home">Curaçao</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-58" value="" placeholder="–" oninput="onScore(58)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-58" value="" placeholder="–" oninput="onScore(58)">
+        
+      </div>
+      <div class="mc-away">Ivory Coast</div>
+      <div class="mc-venue">Philadelphia</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#59 <span class="sbadge bg">GRP F</span></div>
+        <div class="mc-day">Sat Jun 27</div>
+        <div class="mc-time">22:00 Cairo</div>
+      </div>
+      <div class="mc-home">Netherlands</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-59" value="" placeholder="–" oninput="onScore(59)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-59" value="" placeholder="–" oninput="onScore(59)">
+        
+      </div>
+      <div class="mc-away">Tunisia</div>
+      <div class="mc-venue">Monterrey</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#60 <span class="sbadge bg">GRP F</span></div>
+        <div class="mc-day">Sat Jun 27</div>
+        <div class="mc-time">22:00 Cairo</div>
+      </div>
+      <div class="mc-home">Japan</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-60" value="" placeholder="–" oninput="onScore(60)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-60" value="" placeholder="–" oninput="onScore(60)">
+        
+      </div>
+      <div class="mc-away">Sweden</div>
+      <div class="mc-venue">Dallas</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#61 <span class="sbadge bg">GRP G</span></div>
+        <div class="mc-day">Sun Jun 28</div>
+        <div class="mc-time">19:00 Cairo</div>
+      </div>
+      <div class="mc-home">Belgium</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-61" value="" placeholder="–" oninput="onScore(61)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-61" value="" placeholder="–" oninput="onScore(61)">
+        
+      </div>
+      <div class="mc-away">Iran</div>
+      <div class="mc-venue">Atlanta</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#62 <span class="sbadge bg">GRP G</span></div>
+        <div class="mc-day">Sun Jun 28</div>
+        <div class="mc-time">19:00 Cairo</div>
+      </div>
+      <div class="mc-home">New Zealand</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-62" value="" placeholder="–" oninput="onScore(62)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-62" value="" placeholder="–" oninput="onScore(62)">
+        
+      </div>
+      <div class="mc-away">Egypt</div>
+      <div class="mc-venue">San Francisco</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#63 <span class="sbadge bg">GRP H</span></div>
+        <div class="mc-day">Sun Jun 28</div>
+        <div class="mc-time">22:00 Cairo</div>
+      </div>
+      <div class="mc-home">Spain</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-63" value="" placeholder="–" oninput="onScore(63)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-63" value="" placeholder="–" oninput="onScore(63)">
+        
+      </div>
+      <div class="mc-away">Saudi Arabia</div>
+      <div class="mc-venue">Miami</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#64 <span class="sbadge bg">GRP H</span></div>
+        <div class="mc-day">Sun Jun 28</div>
+        <div class="mc-time">22:00 Cairo</div>
+      </div>
+      <div class="mc-home">Uruguay</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-64" value="" placeholder="–" oninput="onScore(64)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-64" value="" placeholder="–" oninput="onScore(64)">
+        
+      </div>
+      <div class="mc-away">Cape Verde</div>
+      <div class="mc-venue">Kansas City</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#65 <span class="sbadge bg">GRP I</span></div>
+        <div class="mc-day">Mon Jun 29</div>
+        <div class="mc-time">19:00 Cairo</div>
+      </div>
+      <div class="mc-home">France</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-65" value="" placeholder="–" oninput="onScore(65)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-65" value="" placeholder="–" oninput="onScore(65)">
+        
+      </div>
+      <div class="mc-away">Norway</div>
+      <div class="mc-venue">Boston</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#66 <span class="sbadge bg">GRP I</span></div>
+        <div class="mc-day">Mon Jun 29</div>
+        <div class="mc-time">19:00 Cairo</div>
+      </div>
+      <div class="mc-home">Senegal</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-66" value="" placeholder="–" oninput="onScore(66)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-66" value="" placeholder="–" oninput="onScore(66)">
+        
+      </div>
+      <div class="mc-away">Iraq</div>
+      <div class="mc-venue">Philadelphia</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#67 <span class="sbadge bg">GRP J</span></div>
+        <div class="mc-day">Mon Jun 29</div>
+        <div class="mc-time">22:00 Cairo</div>
+      </div>
+      <div class="mc-home">Argentina</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-67" value="" placeholder="–" oninput="onScore(67)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-67" value="" placeholder="–" oninput="onScore(67)">
+        
+      </div>
+      <div class="mc-away">Jordan</div>
+      <div class="mc-venue">Kansas City</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#68 <span class="sbadge bg">GRP J</span></div>
+        <div class="mc-day">Mon Jun 29</div>
+        <div class="mc-time">22:00 Cairo</div>
+      </div>
+      <div class="mc-home">Austria</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-68" value="" placeholder="–" oninput="onScore(68)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-68" value="" placeholder="–" oninput="onScore(68)">
+        
+      </div>
+      <div class="mc-away">Algeria</div>
+      <div class="mc-venue">New York/NJ</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#69 <span class="sbadge bg">GRP K</span></div>
+        <div class="mc-day">Tue Jun 30</div>
+        <div class="mc-time">19:00 Cairo</div>
+      </div>
+      <div class="mc-home">Portugal</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-69" value="" placeholder="–" oninput="onScore(69)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-69" value="" placeholder="–" oninput="onScore(69)">
+        
+      </div>
+      <div class="mc-away">Colombia</div>
+      <div class="mc-venue">Houston</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#70 <span class="sbadge bg">GRP K</span></div>
+        <div class="mc-day">Tue Jun 30</div>
+        <div class="mc-time">19:00 Cairo</div>
+      </div>
+      <div class="mc-home">DR Congo</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-70" value="" placeholder="–" oninput="onScore(70)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-70" value="" placeholder="–" oninput="onScore(70)">
+        
+      </div>
+      <div class="mc-away">Uzbekistan</div>
+      <div class="mc-venue">Mexico City</div></div><div class="stage-sep">GROUP STAGE</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#71 <span class="sbadge bg">GRP L</span></div>
+        <div class="mc-day">Tue Jun 30</div>
+        <div class="mc-time">22:00 Cairo</div>
+      </div>
+      <div class="mc-home">England</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-71" value="" placeholder="–" oninput="onScore(71)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-71" value="" placeholder="–" oninput="onScore(71)">
+        
+      </div>
+      <div class="mc-away">Panama</div>
+      <div class="mc-venue">Dallas</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#72 <span class="sbadge bg">GRP L</span></div>
+        <div class="mc-day">Tue Jun 30</div>
+        <div class="mc-time">22:00 Cairo</div>
+      </div>
+      <div class="mc-home">Croatia</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-72" value="" placeholder="–" oninput="onScore(72)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-72" value="" placeholder="–" oninput="onScore(72)">
+        
+      </div>
+      <div class="mc-away">Ghana</div>
+      <div class="mc-venue">Toronto</div></div><div class="stage-sep">ROUND OF 32</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#73 <span class="sbadge br32">R32</span></div>
+        <div class="mc-day">Sun Jun 28</div>
+        <div class="mc-time">20:00 Cairo</div>
+      </div>
+      <div class="mc-home">Czechia</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-73" value="" placeholder="–" oninput="onScore(73)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-73" value="" placeholder="–" oninput="onScore(73)">
+        <select class="pen-sel" id="pen-73" onchange="onPen(73)"><option value="">P?</option><option value="H">H</option><option value="A">A</option></select>
+      </div>
+      <div class="mc-away">Canada</div>
+      <div class="mc-venue">Los Angeles</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#74 <span class="sbadge br32">R32</span></div>
+        <div class="mc-day">Mon Jun 29</div>
+        <div class="mc-time">20:00 Cairo</div>
+      </div>
+      <div class="mc-home">Curaçao</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-74" value="" placeholder="–" oninput="onScore(74)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-74" value="" placeholder="–" oninput="onScore(74)">
+        <select class="pen-sel" id="pen-74" onchange="onPen(74)"><option value="">P?</option><option value="H">H</option><option value="A">A</option></select>
+      </div>
+      <div class="mc-away">3rd</div>
+      <div class="mc-venue">Boston</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#75 <span class="sbadge br32">R32</span></div>
+        <div class="mc-day">Tue Jun 30</div>
+        <div class="mc-time">04:00 Cairo</div>
+      </div>
+      <div class="mc-home">Japan</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-75" value="" placeholder="–" oninput="onScore(75)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-75" value="" placeholder="–" oninput="onScore(75)">
+        <select class="pen-sel" id="pen-75" onchange="onPen(75)"><option value="">P?</option><option value="H">H</option><option value="A">A</option></select>
+      </div>
+      <div class="mc-away">Haiti</div>
+      <div class="mc-venue">Monterrey</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#76 <span class="sbadge br32">R32</span></div>
+        <div class="mc-day">Mon Jun 29</div>
+        <div class="mc-time">20:00 Cairo</div>
+      </div>
+      <div class="mc-home">Brazil</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-76" value="" placeholder="–" oninput="onScore(76)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-76" value="" placeholder="–" oninput="onScore(76)">
+        <select class="pen-sel" id="pen-76" onchange="onPen(76)"><option value="">P?</option><option value="H">H</option><option value="A">A</option></select>
+      </div>
+      <div class="mc-away">Netherlands</div>
+      <div class="mc-venue">Houston</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#77 <span class="sbadge br32">R32</span></div>
+        <div class="mc-day">Wed Jul 1</div>
+        <div class="mc-time">00:00 Cairo</div>
+      </div>
+      <div class="mc-home">France</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-77" value="" placeholder="–" oninput="onScore(77)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-77" value="" placeholder="–" oninput="onScore(77)">
+        <select class="pen-sel" id="pen-77" onchange="onPen(77)"><option value="">P?</option><option value="H">H</option><option value="A">A</option></select>
+      </div>
+      <div class="mc-away">3rd</div>
+      <div class="mc-venue">New York/NJ</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#78 <span class="sbadge br32">R32</span></div>
+        <div class="mc-day">Tue Jun 30</div>
+        <div class="mc-time">20:00 Cairo</div>
+      </div>
+      <div class="mc-home">Paraguay</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-78" value="" placeholder="–" oninput="onScore(78)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-78" value="" placeholder="–" oninput="onScore(78)">
+        <select class="pen-sel" id="pen-78" onchange="onPen(78)"><option value="">P?</option><option value="H">H</option><option value="A">A</option></select>
+      </div>
+      <div class="mc-away">Iraq</div>
+      <div class="mc-venue">Dallas</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#79 <span class="sbadge br32">R32</span></div>
+        <div class="mc-day">Wed Jul 1</div>
+        <div class="mc-time">04:00 Cairo</div>
+      </div>
+      <div class="mc-home">Czechia</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-79" value="" placeholder="–" oninput="onScore(79)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-79" value="" placeholder="–" oninput="onScore(79)">
+        <select class="pen-sel" id="pen-79" onchange="onPen(79)"><option value="">P?</option><option value="H">H</option><option value="A">A</option></select>
+      </div>
+      <div class="mc-away">3rd</div>
+      <div class="mc-venue">Mexico City</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#80 <span class="sbadge br32">R32</span></div>
+        <div class="mc-day">Wed Jul 1</div>
+        <div class="mc-time">19:00 Cairo</div>
+      </div>
+      <div class="mc-home">Croatia</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-80" value="" placeholder="–" oninput="onScore(80)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-80" value="" placeholder="–" oninput="onScore(80)">
+        <select class="pen-sel" id="pen-80" onchange="onPen(80)"><option value="">P?</option><option value="H">H</option><option value="A">A</option></select>
+      </div>
+      <div class="mc-away">3rd</div>
+      <div class="mc-venue">Atlanta</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#81 <span class="sbadge br32">R32</span></div>
+        <div class="mc-day">Thu Jul 2</div>
+        <div class="mc-time">03:00 Cairo</div>
+      </div>
+      <div class="mc-home">Australia</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-81" value="" placeholder="–" oninput="onScore(81)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-81" value="" placeholder="–" oninput="onScore(81)">
+        <select class="pen-sel" id="pen-81" onchange="onPen(81)"><option value="">P?</option><option value="H">H</option><option value="A">A</option></select>
+      </div>
+      <div class="mc-away">3rd</div>
+      <div class="mc-venue">San Francisco</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#82 <span class="sbadge br32">R32</span></div>
+        <div class="mc-day">Wed Jul 1</div>
+        <div class="mc-time">23:00 Cairo</div>
+      </div>
+      <div class="mc-home">Belgium</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-82" value="" placeholder="–" oninput="onScore(82)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-82" value="" placeholder="–" oninput="onScore(82)">
+        <select class="pen-sel" id="pen-82" onchange="onPen(82)"><option value="">P?</option><option value="H">H</option><option value="A">A</option></select>
+      </div>
+      <div class="mc-away">3rd</div>
+      <div class="mc-venue">Seattle</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#83 <span class="sbadge br32">R32</span></div>
+        <div class="mc-day">Fri Jul 3</div>
+        <div class="mc-time">02:00 Cairo</div>
+      </div>
+      <div class="mc-home">Colombia</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-83" value="" placeholder="–" oninput="onScore(83)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-83" value="" placeholder="–" oninput="onScore(83)">
+        <select class="pen-sel" id="pen-83" onchange="onPen(83)"><option value="">P?</option><option value="H">H</option><option value="A">A</option></select>
+      </div>
+      <div class="mc-away">England</div>
+      <div class="mc-venue">Toronto</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#84 <span class="sbadge br32">R32</span></div>
+        <div class="mc-day">Thu Jul 2</div>
+        <div class="mc-time">22:00 Cairo</div>
+      </div>
+      <div class="mc-home">Cape Verde</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-84" value="" placeholder="–" oninput="onScore(84)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-84" value="" placeholder="–" oninput="onScore(84)">
+        <select class="pen-sel" id="pen-84" onchange="onPen(84)"><option value="">P?</option><option value="H">H</option><option value="A">A</option></select>
+      </div>
+      <div class="mc-away">Argentina</div>
+      <div class="mc-venue">Los Angeles</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#85 <span class="sbadge br32">R32</span></div>
+        <div class="mc-day">Fri Jul 3</div>
+        <div class="mc-time">06:00 Cairo</div>
+      </div>
+      <div class="mc-home">Bosnia &amp; Herzegovina</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-85" value="" placeholder="–" oninput="onScore(85)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-85" value="" placeholder="–" oninput="onScore(85)">
+        <select class="pen-sel" id="pen-85" onchange="onPen(85)"><option value="">P?</option><option value="H">H</option><option value="A">A</option></select>
+      </div>
+      <div class="mc-away">3rd</div>
+      <div class="mc-venue">Vancouver</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#86 <span class="sbadge br32">R32</span></div>
+        <div class="mc-day">Sat Jul 4</div>
+        <div class="mc-time">01:00 Cairo</div>
+      </div>
+      <div class="mc-home">Algeria</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-86" value="" placeholder="–" oninput="onScore(86)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-86" value="" placeholder="–" oninput="onScore(86)">
+        <select class="pen-sel" id="pen-86" onchange="onPen(86)"><option value="">P?</option><option value="H">H</option><option value="A">A</option></select>
+      </div>
+      <div class="mc-away">Saudi Arabia</div>
+      <div class="mc-venue">Miami</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#87 <span class="sbadge br32">R32</span></div>
+        <div class="mc-day">Sat Jul 4</div>
+        <div class="mc-time">04:30 Cairo</div>
+      </div>
+      <div class="mc-home">DR Congo</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-87" value="" placeholder="–" oninput="onScore(87)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-87" value="" placeholder="–" oninput="onScore(87)">
+        <select class="pen-sel" id="pen-87" onchange="onPen(87)"><option value="">P?</option><option value="H">H</option><option value="A">A</option></select>
+      </div>
+      <div class="mc-away">3rd</div>
+      <div class="mc-venue">Kansas City</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#88 <span class="sbadge br32">R32</span></div>
+        <div class="mc-day">Fri Jul 3</div>
+        <div class="mc-time">21:00 Cairo</div>
+      </div>
+      <div class="mc-home">Paraguay</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp" id="sh-88" value="" placeholder="–" oninput="onScore(88)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp" id="sa-88" value="" placeholder="–" oninput="onScore(88)">
+        <select class="pen-sel" id="pen-88" onchange="onPen(88)"><option value="">P?</option><option value="H">H</option><option value="A">A</option></select>
+      </div>
+      <div class="mc-away">Egypt</div>
+      <div class="mc-venue">Dallas</div></div><div class="stage-sep">ROUND OF 16</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#89 <span class="sbadge br16">R16</span></div>
+        <div class="mc-day">Sun Jul 5</div>
+        <div class="mc-time">00:00 Cairo</div>
+      </div>
+      <div class="mc-home">W73</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp dis" id="sh-89" value="" placeholder="–" disabled="" oninput="onScore(89)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp dis" id="sa-89" value="" placeholder="–" disabled="" oninput="onScore(89)">
+        <select class="pen-sel" id="pen-89" onchange="onPen(89)"><option value="">P?</option><option value="H">H</option><option value="A">A</option></select>
+      </div>
+      <div class="mc-away">W74</div>
+      <div class="mc-venue">Philadelphia</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#90 <span class="sbadge br16">R16</span></div>
+        <div class="mc-day">Sat Jul 4</div>
+        <div class="mc-time">20:00 Cairo</div>
+      </div>
+      <div class="mc-home">W75</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp dis" id="sh-90" value="" placeholder="–" disabled="" oninput="onScore(90)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp dis" id="sa-90" value="" placeholder="–" disabled="" oninput="onScore(90)">
+        <select class="pen-sel" id="pen-90" onchange="onPen(90)"><option value="">P?</option><option value="H">H</option><option value="A">A</option></select>
+      </div>
+      <div class="mc-away">W76</div>
+      <div class="mc-venue">Houston</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#91 <span class="sbadge br16">R16</span></div>
+        <div class="mc-day">Sun Jul 5</div>
+        <div class="mc-time">23:00 Cairo</div>
+      </div>
+      <div class="mc-home">W77</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp dis" id="sh-91" value="" placeholder="–" disabled="" oninput="onScore(91)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp dis" id="sa-91" value="" placeholder="–" disabled="" oninput="onScore(91)">
+        <select class="pen-sel" id="pen-91" onchange="onPen(91)"><option value="">P?</option><option value="H">H</option><option value="A">A</option></select>
+      </div>
+      <div class="mc-away">W78</div>
+      <div class="mc-venue">New York/NJ</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#92 <span class="sbadge br16">R16</span></div>
+        <div class="mc-day">Mon Jul 6</div>
+        <div class="mc-time">03:00 Cairo</div>
+      </div>
+      <div class="mc-home">W79</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp dis" id="sh-92" value="" placeholder="–" disabled="" oninput="onScore(92)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp dis" id="sa-92" value="" placeholder="–" disabled="" oninput="onScore(92)">
+        <select class="pen-sel" id="pen-92" onchange="onPen(92)"><option value="">P?</option><option value="H">H</option><option value="A">A</option></select>
+      </div>
+      <div class="mc-away">W80</div>
+      <div class="mc-venue">Mexico City</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#93 <span class="sbadge br16">R16</span></div>
+        <div class="mc-day">Mon Jul 6</div>
+        <div class="mc-time">22:00 Cairo</div>
+      </div>
+      <div class="mc-home">W81</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp dis" id="sh-93" value="" placeholder="–" disabled="" oninput="onScore(93)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp dis" id="sa-93" value="" placeholder="–" disabled="" oninput="onScore(93)">
+        <select class="pen-sel" id="pen-93" onchange="onPen(93)"><option value="">P?</option><option value="H">H</option><option value="A">A</option></select>
+      </div>
+      <div class="mc-away">W82</div>
+      <div class="mc-venue">Dallas</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#94 <span class="sbadge br16">R16</span></div>
+        <div class="mc-day">Tue Jul 7</div>
+        <div class="mc-time">00:00 Cairo</div>
+      </div>
+      <div class="mc-home">W83</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp dis" id="sh-94" value="" placeholder="–" disabled="" oninput="onScore(94)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp dis" id="sa-94" value="" placeholder="–" disabled="" oninput="onScore(94)">
+        <select class="pen-sel" id="pen-94" onchange="onPen(94)"><option value="">P?</option><option value="H">H</option><option value="A">A</option></select>
+      </div>
+      <div class="mc-away">W84</div>
+      <div class="mc-venue">Seattle</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#95 <span class="sbadge br16">R16</span></div>
+        <div class="mc-day">Tue Jul 7</div>
+        <div class="mc-time">19:00 Cairo</div>
+      </div>
+      <div class="mc-home">W85</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp dis" id="sh-95" value="" placeholder="–" disabled="" oninput="onScore(95)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp dis" id="sa-95" value="" placeholder="–" disabled="" oninput="onScore(95)">
+        <select class="pen-sel" id="pen-95" onchange="onPen(95)"><option value="">P?</option><option value="H">H</option><option value="A">A</option></select>
+      </div>
+      <div class="mc-away">W86</div>
+      <div class="mc-venue">Atlanta</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#96 <span class="sbadge br16">R16</span></div>
+        <div class="mc-day">Tue Jul 7</div>
+        <div class="mc-time">23:00 Cairo</div>
+      </div>
+      <div class="mc-home">W87</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp dis" id="sh-96" value="" placeholder="–" disabled="" oninput="onScore(96)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp dis" id="sa-96" value="" placeholder="–" disabled="" oninput="onScore(96)">
+        <select class="pen-sel" id="pen-96" onchange="onPen(96)"><option value="">P?</option><option value="H">H</option><option value="A">A</option></select>
+      </div>
+      <div class="mc-away">W88</div>
+      <div class="mc-venue">Vancouver</div></div><div class="stage-sep">QUARTER-FINAL</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#97 <span class="sbadge bqf">QUARTER-FINAL</span></div>
+        <div class="mc-day">Thu Jul 9</div>
+        <div class="mc-time">23:00 Cairo</div>
+      </div>
+      <div class="mc-home">W89</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp dis" id="sh-97" value="" placeholder="–" disabled="" oninput="onScore(97)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp dis" id="sa-97" value="" placeholder="–" disabled="" oninput="onScore(97)">
+        <select class="pen-sel" id="pen-97" onchange="onPen(97)"><option value="">P?</option><option value="H">H</option><option value="A">A</option></select>
+      </div>
+      <div class="mc-away">W90</div>
+      <div class="mc-venue">Boston</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#98 <span class="sbadge bqf">QUARTER-FINAL</span></div>
+        <div class="mc-day">Fri Jul 10</div>
+        <div class="mc-time">22:00 Cairo</div>
+      </div>
+      <div class="mc-home">W91</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp dis" id="sh-98" value="" placeholder="–" disabled="" oninput="onScore(98)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp dis" id="sa-98" value="" placeholder="–" disabled="" oninput="onScore(98)">
+        <select class="pen-sel" id="pen-98" onchange="onPen(98)"><option value="">P?</option><option value="H">H</option><option value="A">A</option></select>
+      </div>
+      <div class="mc-away">W92</div>
+      <div class="mc-venue">Los Angeles</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#99 <span class="sbadge bqf">QUARTER-FINAL</span></div>
+        <div class="mc-day">Sun Jul 12</div>
+        <div class="mc-time">00:00 Cairo</div>
+      </div>
+      <div class="mc-home">W93</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp dis" id="sh-99" value="" placeholder="–" disabled="" oninput="onScore(99)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp dis" id="sa-99" value="" placeholder="–" disabled="" oninput="onScore(99)">
+        <select class="pen-sel" id="pen-99" onchange="onPen(99)"><option value="">P?</option><option value="H">H</option><option value="A">A</option></select>
+      </div>
+      <div class="mc-away">W94</div>
+      <div class="mc-venue">Miami</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#100 <span class="sbadge bqf">QUARTER-FINAL</span></div>
+        <div class="mc-day">Sun Jul 12</div>
+        <div class="mc-time">04:00 Cairo</div>
+      </div>
+      <div class="mc-home">W95</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp dis" id="sh-100" value="" placeholder="–" disabled="" oninput="onScore(100)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp dis" id="sa-100" value="" placeholder="–" disabled="" oninput="onScore(100)">
+        <select class="pen-sel" id="pen-100" onchange="onPen(100)"><option value="">P?</option><option value="H">H</option><option value="A">A</option></select>
+      </div>
+      <div class="mc-away">W96</div>
+      <div class="mc-venue">Kansas City</div></div><div class="stage-sep">SEMI-FINAL</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#101 <span class="sbadge bsf">SEMI-FINAL</span></div>
+        <div class="mc-day">Tue Jul 14</div>
+        <div class="mc-time">22:00 Cairo</div>
+      </div>
+      <div class="mc-home">W97</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp dis" id="sh-101" value="" placeholder="–" disabled="" oninput="onScore(101)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp dis" id="sa-101" value="" placeholder="–" disabled="" oninput="onScore(101)">
+        <select class="pen-sel" id="pen-101" onchange="onPen(101)"><option value="">P?</option><option value="H">H</option><option value="A">A</option></select>
+      </div>
+      <div class="mc-away">W98</div>
+      <div class="mc-venue">Dallas</div></div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#102 <span class="sbadge bsf">SEMI-FINAL</span></div>
+        <div class="mc-day">Wed Jul 15</div>
+        <div class="mc-time">22:00 Cairo</div>
+      </div>
+      <div class="mc-home">W99</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp dis" id="sh-102" value="" placeholder="–" disabled="" oninput="onScore(102)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp dis" id="sa-102" value="" placeholder="–" disabled="" oninput="onScore(102)">
+        <select class="pen-sel" id="pen-102" onchange="onPen(102)"><option value="">P?</option><option value="H">H</option><option value="A">A</option></select>
+      </div>
+      <div class="mc-away">W100</div>
+      <div class="mc-venue">Atlanta</div></div><div class="stage-sep">THIRD-PLACE PLAY-OFF</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#103 <span class="sbadge bfin">THIRD</span></div>
+        <div class="mc-day">Sun Jul 19</div>
+        <div class="mc-time">00:00 Cairo</div>
+      </div>
+      <div class="mc-home">L101</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp dis" id="sh-103" value="" placeholder="–" disabled="" oninput="onScore(103)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp dis" id="sa-103" value="" placeholder="–" disabled="" oninput="onScore(103)">
+        <select class="pen-sel" id="pen-103" onchange="onPen(103)"><option value="">P?</option><option value="H">H</option><option value="A">A</option></select>
+      </div>
+      <div class="mc-away">L102</div>
+      <div class="mc-venue">Miami</div></div><div class="stage-sep">FINAL</div><div class="match-card">
+      <div class="mc-date">
+        <div class="mc-num">#104 <span class="sbadge bfin">FINAL</span></div>
+        <div class="mc-day">Sun Jul 19</div>
+        <div class="mc-time">22:00 Cairo</div>
+      </div>
+      <div class="mc-home">W101</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp dis" id="sh-104" value="" placeholder="–" disabled="" oninput="onScore(104)">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp dis" id="sa-104" value="" placeholder="–" disabled="" oninput="onScore(104)">
+        <select class="pen-sel" id="pen-104" onchange="onPen(104)"><option value="">P?</option><option value="H">H</option><option value="A">A</option></select>
+      </div>
+      <div class="mc-away">W102</div>
+      <div class="mc-venue">New York/NJ</div></div></div>
+  </div>
+
+  <!-- ═══ STANDINGS ═══ -->
+  <div id="tab-standings" class="section">
+    <div class="tab-cover">
+      <img class="tab-cover-img" src="./FIFA World Cup 2026 — Match Tracker_files/photo-1522778526097-ce0a22ceb253" alt="Football pitch aerial" loading="lazy">
+      <div class="tab-cover-ov"></div>
+      <div class="tab-cover-title">
+        <h2>STANDINGS</h2>
+        <p>12 GROUPS · LIVE-UPDATED · FIFA TIEBREAKERS</p>
+      </div>
+    </div>
+    <div class="legend">
+      <div class="leg"><div class="leg-b" style="background:var(--green)"></div>Advance to Round of 32</div>
+      <div class="leg"><div class="leg-b" style="background:var(--blue)"></div>Best 3rd Place (potential)</div>
+    </div>
+    <div class="groups-grid" id="groups-grid"><div class="group-card"><div class="group-head">
+      <div class="group-head-img" style="background-image:url(&#39;https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=400&amp;q=60&#39;)"></div>
+      <div class="group-letter">A</div>
+      <div class="group-meta">
+        <div class="group-name">GROUP A</div>
+        <div class="group-sub">4 TEAMS · 6 MATCHES</div>
+      </div>
+    </div>
+    <table class="gtable">
+      <thead><tr><th>TEAM</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>PTS</th></tr></thead>
+      <tbody><tr class="rq1"><td>Czechia</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr><tr class="rq2"><td>Mexico</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr><tr class="rq3"><td>South Africa</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr><tr class="rout"><td>South Korea</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr></tbody>
+    </table></div><div class="group-card"><div class="group-head">
+      <div class="group-head-img" style="background-image:url(&#39;https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=400&amp;q=60&#39;)"></div>
+      <div class="group-letter">B</div>
+      <div class="group-meta">
+        <div class="group-name">GROUP B</div>
+        <div class="group-sub">4 TEAMS · 6 MATCHES</div>
+      </div>
+    </div>
+    <table class="gtable">
+      <thead><tr><th>TEAM</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>PTS</th></tr></thead>
+      <tbody><tr class="rq1"><td>Bosnia &amp; Herzegovina</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr><tr class="rq2"><td>Canada</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr><tr class="rq3"><td>Qatar</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr><tr class="rout"><td>Switzerland</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr></tbody>
+    </table></div><div class="group-card"><div class="group-head">
+      <div class="group-head-img" style="background-image:url(&#39;https://images.unsplash.com/photo-1553778263-73a83bab9b0c?w=400&amp;q=60&#39;)"></div>
+      <div class="group-letter">C</div>
+      <div class="group-meta">
+        <div class="group-name">GROUP C</div>
+        <div class="group-sub">4 TEAMS · 6 MATCHES</div>
+      </div>
+    </div>
+    <table class="gtable">
+      <thead><tr><th>TEAM</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>PTS</th></tr></thead>
+      <tbody><tr class="rq1"><td>Brazil</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr><tr class="rq2"><td>Haiti</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr><tr class="rq3"><td>Morocco</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr><tr class="rout"><td>Scotland</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr></tbody>
+    </table></div><div class="group-card"><div class="group-head">
+      <div class="group-head-img" style="background-image:url(&#39;https://images.unsplash.com/photo-1489944440615-453fc2b6a9a9?w=400&amp;q=60&#39;)"></div>
+      <div class="group-letter">D</div>
+      <div class="group-meta">
+        <div class="group-name">GROUP D</div>
+        <div class="group-sub">4 TEAMS · 6 MATCHES</div>
+      </div>
+    </div>
+    <table class="gtable">
+      <thead><tr><th>TEAM</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>PTS</th></tr></thead>
+      <tbody><tr class="rq1"><td>Australia</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr><tr class="rq2"><td>Paraguay</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr><tr class="rq3"><td>Türkiye</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr><tr class="rout"><td>United States</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr></tbody>
+    </table></div><div class="group-card"><div class="group-head">
+      <div class="group-head-img" style="background-image:url(&#39;https://images.unsplash.com/photo-1522778526097-ce0a22ceb253?w=400&amp;q=60&#39;)"></div>
+      <div class="group-letter">E</div>
+      <div class="group-meta">
+        <div class="group-name">GROUP E</div>
+        <div class="group-sub">4 TEAMS · 6 MATCHES</div>
+      </div>
+    </div>
+    <table class="gtable">
+      <thead><tr><th>TEAM</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>PTS</th></tr></thead>
+      <tbody><tr class="rq1"><td>Curaçao</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr><tr class="rq2"><td>Ecuador</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr><tr class="rq3"><td>Germany</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr><tr class="rout"><td>Ivory Coast</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr></tbody>
+    </table></div><div class="group-card"><div class="group-head">
+      <div class="group-head-img" style="background-image:url(&#39;https://images.unsplash.com/photo-1543326727-cf6c39e8f84c?w=400&amp;q=60&#39;)"></div>
+      <div class="group-letter">F</div>
+      <div class="group-meta">
+        <div class="group-name">GROUP F</div>
+        <div class="group-sub">4 TEAMS · 6 MATCHES</div>
+      </div>
+    </div>
+    <table class="gtable">
+      <thead><tr><th>TEAM</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>PTS</th></tr></thead>
+      <tbody><tr class="rq1"><td>Japan</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr><tr class="rq2"><td>Netherlands</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr><tr class="rq3"><td>Sweden</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr><tr class="rout"><td>Tunisia</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr></tbody>
+    </table></div><div class="group-card"><div class="group-head">
+      <div class="group-head-img" style="background-image:url(&#39;https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=400&amp;q=60&#39;)"></div>
+      <div class="group-letter">G</div>
+      <div class="group-meta">
+        <div class="group-name">GROUP G</div>
+        <div class="group-sub">4 TEAMS · 6 MATCHES</div>
+      </div>
+    </div>
+    <table class="gtable">
+      <thead><tr><th>TEAM</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>PTS</th></tr></thead>
+      <tbody><tr class="rq1"><td>Belgium</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr><tr class="rq2"><td>Egypt</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr><tr class="rq3"><td>Iran</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr><tr class="rout"><td>New Zealand</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr></tbody>
+    </table></div><div class="group-card"><div class="group-head">
+      <div class="group-head-img" style="background-image:url(&#39;https://images.unsplash.com/photo-1551958219-acbc15d74ce6?w=400&amp;q=60&#39;)"></div>
+      <div class="group-letter">H</div>
+      <div class="group-meta">
+        <div class="group-name">GROUP H</div>
+        <div class="group-sub">4 TEAMS · 6 MATCHES</div>
+      </div>
+    </div>
+    <table class="gtable">
+      <thead><tr><th>TEAM</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>PTS</th></tr></thead>
+      <tbody><tr class="rq1"><td>Cape Verde</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr><tr class="rq2"><td>Saudi Arabia</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr><tr class="rq3"><td>Spain</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr><tr class="rout"><td>Uruguay</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr></tbody>
+    </table></div><div class="group-card"><div class="group-head">
+      <div class="group-head-img" style="background-image:url(&#39;https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=400&amp;q=60&#39;)"></div>
+      <div class="group-letter">I</div>
+      <div class="group-meta">
+        <div class="group-name">GROUP I</div>
+        <div class="group-sub">4 TEAMS · 6 MATCHES</div>
+      </div>
+    </div>
+    <table class="gtable">
+      <thead><tr><th>TEAM</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>PTS</th></tr></thead>
+      <tbody><tr class="rq1"><td>France</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr><tr class="rq2"><td>Iraq</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr><tr class="rq3"><td>Norway</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr><tr class="rout"><td>Senegal</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr></tbody>
+    </table></div><div class="group-card"><div class="group-head">
+      <div class="group-head-img" style="background-image:url(&#39;https://images.unsplash.com/photo-1517927033932-b3d18e61fb3a?w=400&amp;q=60&#39;)"></div>
+      <div class="group-letter">J</div>
+      <div class="group-meta">
+        <div class="group-name">GROUP J</div>
+        <div class="group-sub">4 TEAMS · 6 MATCHES</div>
+      </div>
+    </div>
+    <table class="gtable">
+      <thead><tr><th>TEAM</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>PTS</th></tr></thead>
+      <tbody><tr class="rq1"><td>Algeria</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr><tr class="rq2"><td>Argentina</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr><tr class="rq3"><td>Austria</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr><tr class="rout"><td>Jordan</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr></tbody>
+    </table></div><div class="group-card"><div class="group-head">
+      <div class="group-head-img" style="background-image:url(&#39;https://images.unsplash.com/photo-1516802273409-68526ee1bdd6?w=400&amp;q=60&#39;)"></div>
+      <div class="group-letter">K</div>
+      <div class="group-meta">
+        <div class="group-name">GROUP K</div>
+        <div class="group-sub">4 TEAMS · 6 MATCHES</div>
+      </div>
+    </div>
+    <table class="gtable">
+      <thead><tr><th>TEAM</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>PTS</th></tr></thead>
+      <tbody><tr class="rq1"><td>Colombia</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr><tr class="rq2"><td>DR Congo</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr><tr class="rq3"><td>Portugal</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr><tr class="rout"><td>Uzbekistan</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr></tbody>
+    </table></div><div class="group-card"><div class="group-head">
+      <div class="group-head-img" style="background-image:url(&#39;https://images.unsplash.com/photo-1434648957308-5e6a859697e8?w=400&amp;q=60&#39;)"></div>
+      <div class="group-letter">L</div>
+      <div class="group-meta">
+        <div class="group-name">GROUP L</div>
+        <div class="group-sub">4 TEAMS · 6 MATCHES</div>
+      </div>
+    </div>
+    <table class="gtable">
+      <thead><tr><th>TEAM</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>PTS</th></tr></thead>
+      <tbody><tr class="rq1"><td>Croatia</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr><tr class="rq2"><td>England</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr><tr class="rq3"><td>Ghana</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr><tr class="rout"><td>Panama</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="pts-v">0</td></tr></tbody>
+    </table></div></div>
+  </div>
+
+  <!-- ═══ BRACKET ═══ -->
+  <div id="tab-bracket" class="section">
+    <div class="tab-cover">
+      <img class="tab-cover-img" src="./FIFA World Cup 2026 — Match Tracker_files/photo-1553778263-73a83bab9b0c" alt="Stadium night" loading="lazy">
+      <div class="tab-cover-ov"></div>
+      <div class="tab-cover-title">
+        <h2>BRACKET</h2>
+        <p>ROUND OF 32 THROUGH THE FINAL · AUTO-UPDATES</p>
+      </div>
+    </div>
+    <div class="bracket-wrap"><div class="bk-grid" id="bracket-content">
+    <div><div class="bk-col-label">R32 #1–8</div><div class="bk-m "><div class="bk-t tbd ">Czechia<span class="bk-sc"></span></div><div class="bk-div"></div><div class="bk-t tbd ">Canada<span class="bk-sc"></span></div><div class="bk-info">#73·Sun Jun 28·Los Angeles</div></div><div class="bk-m "><div class="bk-t tbd ">Curaçao<span class="bk-sc"></span></div><div class="bk-div"></div><div class="bk-t tbd ">3rd<span class="bk-sc"></span></div><div class="bk-info">#74·Mon Jun 29·Boston</div></div><div class="bk-m "><div class="bk-t tbd ">Japan<span class="bk-sc"></span></div><div class="bk-div"></div><div class="bk-t tbd ">Haiti<span class="bk-sc"></span></div><div class="bk-info">#75·Tue Jun 30·Monterrey</div></div><div class="bk-m "><div class="bk-t tbd ">Brazil<span class="bk-sc"></span></div><div class="bk-div"></div><div class="bk-t tbd ">Netherlands<span class="bk-sc"></span></div><div class="bk-info">#76·Mon Jun 29·Houston</div></div><div class="bk-m "><div class="bk-t tbd ">France<span class="bk-sc"></span></div><div class="bk-div"></div><div class="bk-t tbd ">3rd<span class="bk-sc"></span></div><div class="bk-info">#77·Wed Jul 1·New York/NJ</div></div><div class="bk-m "><div class="bk-t tbd ">Paraguay<span class="bk-sc"></span></div><div class="bk-div"></div><div class="bk-t tbd ">Iraq<span class="bk-sc"></span></div><div class="bk-info">#78·Tue Jun 30·Dallas</div></div><div class="bk-m "><div class="bk-t tbd ">Czechia<span class="bk-sc"></span></div><div class="bk-div"></div><div class="bk-t tbd ">3rd<span class="bk-sc"></span></div><div class="bk-info">#79·Wed Jul 1·Mexico City</div></div><div class="bk-m "><div class="bk-t tbd ">Croatia<span class="bk-sc"></span></div><div class="bk-div"></div><div class="bk-t tbd ">3rd<span class="bk-sc"></span></div><div class="bk-info">#80·Wed Jul 1·Atlanta</div></div></div>
+    <div><div class="bk-col-label">R32 #9–16</div><div class="bk-m "><div class="bk-t tbd ">Australia<span class="bk-sc"></span></div><div class="bk-div"></div><div class="bk-t tbd ">3rd<span class="bk-sc"></span></div><div class="bk-info">#81·Thu Jul 2·San Francisco</div></div><div class="bk-m "><div class="bk-t tbd ">Belgium<span class="bk-sc"></span></div><div class="bk-div"></div><div class="bk-t tbd ">3rd<span class="bk-sc"></span></div><div class="bk-info">#82·Wed Jul 1·Seattle</div></div><div class="bk-m "><div class="bk-t tbd ">Colombia<span class="bk-sc"></span></div><div class="bk-div"></div><div class="bk-t tbd ">England<span class="bk-sc"></span></div><div class="bk-info">#83·Fri Jul 3·Toronto</div></div><div class="bk-m "><div class="bk-t tbd ">Cape Verde<span class="bk-sc"></span></div><div class="bk-div"></div><div class="bk-t tbd ">Argentina<span class="bk-sc"></span></div><div class="bk-info">#84·Thu Jul 2·Los Angeles</div></div><div class="bk-m "><div class="bk-t tbd ">Bosnia &amp; Herzegovina<span class="bk-sc"></span></div><div class="bk-div"></div><div class="bk-t tbd ">3rd<span class="bk-sc"></span></div><div class="bk-info">#85·Fri Jul 3·Vancouver</div></div><div class="bk-m "><div class="bk-t tbd ">Algeria<span class="bk-sc"></span></div><div class="bk-div"></div><div class="bk-t tbd ">Saudi Arabia<span class="bk-sc"></span></div><div class="bk-info">#86·Sat Jul 4·Miami</div></div><div class="bk-m "><div class="bk-t tbd ">DR Congo<span class="bk-sc"></span></div><div class="bk-div"></div><div class="bk-t tbd ">3rd<span class="bk-sc"></span></div><div class="bk-info">#87·Sat Jul 4·Kansas City</div></div><div class="bk-m "><div class="bk-t tbd ">Paraguay<span class="bk-sc"></span></div><div class="bk-div"></div><div class="bk-t tbd ">Egypt<span class="bk-sc"></span></div><div class="bk-info">#88·Fri Jul 3·Dallas</div></div></div>
+    <div><div class="bk-col-label">ROUND OF 16</div><div class="bk-m "><div class="bk-t tbd ">W73<span class="bk-sc"></span></div><div class="bk-div"></div><div class="bk-t tbd ">W74<span class="bk-sc"></span></div><div class="bk-info">#89·Sun Jul 5·Philadelphia</div></div><div class="bk-m "><div class="bk-t tbd ">W75<span class="bk-sc"></span></div><div class="bk-div"></div><div class="bk-t tbd ">W76<span class="bk-sc"></span></div><div class="bk-info">#90·Sat Jul 4·Houston</div></div><div class="bk-m "><div class="bk-t tbd ">W77<span class="bk-sc"></span></div><div class="bk-div"></div><div class="bk-t tbd ">W78<span class="bk-sc"></span></div><div class="bk-info">#91·Sun Jul 5·New York/NJ</div></div><div class="bk-m "><div class="bk-t tbd ">W79<span class="bk-sc"></span></div><div class="bk-div"></div><div class="bk-t tbd ">W80<span class="bk-sc"></span></div><div class="bk-info">#92·Mon Jul 6·Mexico City</div></div><div class="bk-m "><div class="bk-t tbd ">W81<span class="bk-sc"></span></div><div class="bk-div"></div><div class="bk-t tbd ">W82<span class="bk-sc"></span></div><div class="bk-info">#93·Mon Jul 6·Dallas</div></div><div class="bk-m "><div class="bk-t tbd ">W83<span class="bk-sc"></span></div><div class="bk-div"></div><div class="bk-t tbd ">W84<span class="bk-sc"></span></div><div class="bk-info">#94·Tue Jul 7·Seattle</div></div><div class="bk-m "><div class="bk-t tbd ">W85<span class="bk-sc"></span></div><div class="bk-div"></div><div class="bk-t tbd ">W86<span class="bk-sc"></span></div><div class="bk-info">#95·Tue Jul 7·Atlanta</div></div><div class="bk-m "><div class="bk-t tbd ">W87<span class="bk-sc"></span></div><div class="bk-div"></div><div class="bk-t tbd ">W88<span class="bk-sc"></span></div><div class="bk-info">#96·Tue Jul 7·Vancouver</div></div></div>
+    <div><div class="bk-col-label">QUARTER-FINALS</div><div class="bk-m "><div class="bk-t tbd ">W89<span class="bk-sc"></span></div><div class="bk-div"></div><div class="bk-t tbd ">W90<span class="bk-sc"></span></div><div class="bk-info">#97·Thu Jul 9·Boston</div></div><div class="bk-m "><div class="bk-t tbd ">W91<span class="bk-sc"></span></div><div class="bk-div"></div><div class="bk-t tbd ">W92<span class="bk-sc"></span></div><div class="bk-info">#98·Fri Jul 10·Los Angeles</div></div><div class="bk-m "><div class="bk-t tbd ">W93<span class="bk-sc"></span></div><div class="bk-div"></div><div class="bk-t tbd ">W94<span class="bk-sc"></span></div><div class="bk-info">#99·Sun Jul 12·Miami</div></div><div class="bk-m "><div class="bk-t tbd ">W95<span class="bk-sc"></span></div><div class="bk-div"></div><div class="bk-t tbd ">W96<span class="bk-sc"></span></div><div class="bk-info">#100·Sun Jul 12·Kansas City</div></div><div class="bk-col-label" style="margin-top:12px">SEMI-FINALS</div><div class="bk-m "><div class="bk-t tbd ">W97<span class="bk-sc"></span></div><div class="bk-div"></div><div class="bk-t tbd ">W98<span class="bk-sc"></span></div><div class="bk-info">#101·Tue Jul 14·Dallas</div></div><div class="bk-m "><div class="bk-t tbd ">W99<span class="bk-sc"></span></div><div class="bk-div"></div><div class="bk-t tbd ">W100<span class="bk-sc"></span></div><div class="bk-info">#102·Wed Jul 15·Atlanta</div></div></div>
+    <div><div class="bk-col-label">FINAL</div><div class="bk-m bk-fin"><div class="bk-t tbd ">W101<span class="bk-sc"></span></div><div class="bk-div"></div><div class="bk-t tbd ">W102<span class="bk-sc"></span></div><div class="bk-info">#104·Sun Jul 19·New York/NJ</div></div><div class="champ"><div class="champ-l">🏆 CHAMPION</div><div class="champ-n">TBD</div></div><div class="bk-col-label" style="margin-top:12px">3RD PLACE</div><div class="bk-m "><div class="bk-t tbd ">L101<span class="bk-sc"></span></div><div class="bk-div"></div><div class="bk-t tbd ">L102<span class="bk-sc"></span></div><div class="bk-info">#103·Sun Jul 19·Miami</div></div></div></div></div>
+  </div>
+
+  <!-- ═══ THIRD PLACE ═══ -->
+  <div id="tab-third" class="section">
+    <div class="tab-cover">
+      <img class="tab-cover-img" src="./FIFA World Cup 2026 — Match Tracker_files/photo-1543326727-cf6c39e8f84c" alt="Soccer player celebration" loading="lazy">
+      <div class="tab-cover-ov"></div>
+      <div class="tab-cover-title">
+        <h2>THIRD PLACE</h2>
+        <p>8 OF 12 THIRD-PLACED TEAMS ADVANCE</p>
+      </div>
+    </div>
+    <p style="font-size:14px;color:var(--text-sub);margin-bottom:20px;line-height:1.7;">The 8 best third-placed teams across all 12 groups advance to the Round of 32. Ranked by Points → GD → GF.</p>
+    <div class="tp-wrap">
+      <table class="tptable">
+        <thead><tr><th>RANK</th><th>GRP</th><th>TEAM</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>PTS</th><th>ADVANCE?</th></tr></thead>
+        <tbody id="third-body"><tr class="qy"><td><span class="rk-n">1</span></td><td><span class="grp-t">A</span></td><td>South Africa</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td style="font-weight:700;color:var(--gold-l)">0</td><td><span class="qual-y">✓ YES</span></td></tr><tr class="qy"><td><span class="rk-n">2</span></td><td><span class="grp-t">B</span></td><td>Qatar</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td style="font-weight:700;color:var(--gold-l)">0</td><td><span class="qual-y">✓ YES</span></td></tr><tr class="qy"><td><span class="rk-n">3</span></td><td><span class="grp-t">C</span></td><td>Morocco</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td style="font-weight:700;color:var(--gold-l)">0</td><td><span class="qual-y">✓ YES</span></td></tr><tr class="qy"><td><span class="rk-n">4</span></td><td><span class="grp-t">D</span></td><td>Türkiye</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td style="font-weight:700;color:var(--gold-l)">0</td><td><span class="qual-y">✓ YES</span></td></tr><tr class="qy"><td><span class="rk-n">5</span></td><td><span class="grp-t">E</span></td><td>Germany</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td style="font-weight:700;color:var(--gold-l)">0</td><td><span class="qual-y">✓ YES</span></td></tr><tr class="qy"><td><span class="rk-n">6</span></td><td><span class="grp-t">F</span></td><td>Sweden</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td style="font-weight:700;color:var(--gold-l)">0</td><td><span class="qual-y">✓ YES</span></td></tr><tr class="qy"><td><span class="rk-n">7</span></td><td><span class="grp-t">G</span></td><td>Iran</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td style="font-weight:700;color:var(--gold-l)">0</td><td><span class="qual-y">✓ YES</span></td></tr><tr class="qy"><td><span class="rk-n">8</span></td><td><span class="grp-t">H</span></td><td>Spain</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td style="font-weight:700;color:var(--gold-l)">0</td><td><span class="qual-y">✓ YES</span></td></tr><tr class=""><td><span class="rk-n">9</span></td><td><span class="grp-t">I</span></td><td>Norway</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td style="font-weight:700;color:var(--gold-l)">0</td><td><span class="qual-n">✗ NO</span></td></tr><tr class=""><td><span class="rk-n">10</span></td><td><span class="grp-t">J</span></td><td>Austria</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td style="font-weight:700;color:var(--gold-l)">0</td><td><span class="qual-n">✗ NO</span></td></tr><tr class=""><td><span class="rk-n">11</span></td><td><span class="grp-t">K</span></td><td>Portugal</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td style="font-weight:700;color:var(--gold-l)">0</td><td><span class="qual-n">✗ NO</span></td></tr><tr class=""><td><span class="rk-n">12</span></td><td><span class="grp-t">L</span></td><td>Ghana</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td style="font-weight:700;color:var(--gold-l)">0</td><td><span class="qual-n">✗ NO</span></td></tr></tbody>
+      </table>
+    </div>
+    <div style="margin-top:36px;">
+      <div style="font-family:&#39;Bebas Neue&#39;,sans-serif;font-size:26px;letter-spacing:1px;margin-bottom:14px;">SLOT ALLOCATION</div>
+      <div class="tp-wrap">
+        <table class="tptable">
+          <thead><tr><th>MATCH</th><th>FACES</th><th>ELIGIBLE GROUPS</th><th>TEAM</th><th>STATUS</th></tr></thead>
+          <tbody id="slot-body"><tr><td style="font-weight:700">#74</td><td style="font-size:12px;color:var(--text-sub)">Winner Group E</td><td style="font-size:12px;color:var(--text-muted)">A / B / C / D / F</td><td style="font-weight:600;color:var(--gold-l)">South Africa</td><td><span class="qual-y">✓ OK</span></td></tr><tr><td style="font-weight:700">#77</td><td style="font-size:12px;color:var(--text-sub)">Winner Group I</td><td style="font-size:12px;color:var(--text-muted)">C / D / F / G / H</td><td style="font-weight:600;color:var(--gold-l)">Morocco</td><td><span class="qual-y">✓ OK</span></td></tr><tr><td style="font-weight:700">#79</td><td style="font-size:12px;color:var(--text-sub)">Winner Group A</td><td style="font-size:12px;color:var(--text-muted)">C / E / F / H / I</td><td style="font-weight:600;color:var(--gold-l)">Germany</td><td><span class="qual-y">✓ OK</span></td></tr><tr><td style="font-weight:700">#80</td><td style="font-size:12px;color:var(--text-sub)">Winner Group L</td><td style="font-size:12px;color:var(--text-muted)">E / H / I / J / K</td><td style="font-weight:600;color:var(--gold-l)">Spain</td><td><span class="qual-y">✓ OK</span></td></tr><tr><td style="font-weight:700">#81</td><td style="font-size:12px;color:var(--text-sub)">Winner Group D</td><td style="font-size:12px;color:var(--text-muted)">B / E / F / I / J</td><td style="font-weight:600;color:var(--gold-l)">Qatar</td><td><span class="qual-y">✓ OK</span></td></tr><tr><td style="font-weight:700">#82</td><td style="font-size:12px;color:var(--text-sub)">Winner Group G</td><td style="font-size:12px;color:var(--text-muted)">A / E / H / I / J</td><td style="font-weight:600;color:var(--gold-l)">—</td><td><span class="qual-n">Pending</span></td></tr><tr><td style="font-weight:700">#85</td><td style="font-size:12px;color:var(--text-sub)">Winner Group B</td><td style="font-size:12px;color:var(--text-muted)">E / F / G / I / J</td><td style="font-weight:600;color:var(--gold-l)">Sweden</td><td><span class="qual-y">✓ OK</span></td></tr><tr><td style="font-weight:700">#87</td><td style="font-size:12px;color:var(--text-sub)">Winner Group K</td><td style="font-size:12px;color:var(--text-muted)">D / E / I / J / L</td><td style="font-weight:600;color:var(--gold-l)">Türkiye</td><td><span class="qual-y">✓ OK</span></td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ HOW TO USE ═══ -->
+  <div id="tab-howto" class="section">
+    <div class="tab-cover">
+      <img class="tab-cover-img" src="./FIFA World Cup 2026 — Match Tracker_files/photo-1489944440615-453fc2b6a9a9" alt="Football close up" loading="lazy">
+      <div class="tab-cover-ov"></div>
+      <div class="tab-cover-title">
+        <h2>HOW TO USE</h2>
+        <p>LIVE DATA · AUTO-SAVE · DUAL THEME</p>
+      </div>
+    </div>
+    <div class="info-grid">
+      <div class="info-card"><h3>LIVE DATA SYNC</h3><p>Scores are fetched automatically from <strong>openfootball on GitHub</strong> — a free, open-source, no-API-key data source maintained in real time during the tournament. The tracker polls for updates every 3 minutes. Hit <strong>↻ REFRESH</strong> to sync immediately.</p></div>
+      <div class="info-card"><h3>MANUAL SCORES</h3><p>You can also type scores directly into the gold input boxes. Your manual entries are auto-saved to your browser and merge with any live data. A green border on an input means the score came from the live feed.</p></div>
+      <div class="info-card"><h3>PENALTY SHOOTOUTS</h3><p>For knockout matches decided on penalties, enter the full-time score (e.g. 1–1) then pick <strong>H</strong> or <strong>A</strong> in the <strong>P</strong> dropdown to record the shootout winner.</p></div>
+      <div class="info-card"><h3>AUTO-SAVE</h3><p>All manually entered scores are saved to your browser's localStorage automatically — 600ms after each keystroke. They survive page refreshes and come back on your next visit. A pulse dot confirms the system is active.</p></div>
+      <div class="info-card"><h3>LIGHT / DARK MODE</h3><p>Toggle between the dark stadium theme and the warm parchment light theme using the pill button at the top right of the navigation bar. Your preference is saved and restored on your next visit.</p></div>
+      <div class="info-card"><h3>COLOUR KEY</h3>
+        <div class="ck-row"><div class="ck-sw" style="background:var(--inp-b)"></div>Gold border — editable score field</div>
+        <div class="ck-row"><div class="ck-sw" style="background:var(--green)"></div>Green border — auto-filled from live feed</div>
+        <div class="ck-row"><div class="ck-sw" style="background:var(--green)"></div>Green bar — advances to Round of 32</div>
+        <div class="ck-row"><div class="ck-sw" style="background:var(--blue)"></div>Blue bar — potential best 3rd place</div>
+      </div>
+    </div>
+    <div class="info-card" style="margin-top:0"><h3>DATA SOURCE</h3><p style="color:var(--text-sub)">Live scores: <a href="https://github.com/openfootball/worldcup.json" target="_blank" style="color:var(--gold)">openfootball/worldcup.json</a> on GitHub — free, open-source, no API key required. Schedule base: FIFA / Al Jazeera &amp; USA TODAY draw coverage (Dec 2025). Times in Cairo (GMT+3).</p></div>
+  </div>
+
+</div>
+
+<script>
+/* ══════════════════════════════════════════════
+   HERO ROTATION
+══════════════════════════════════════════════ */
+const HERO_IMGS = [
+  'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=1600&q=80',
+  'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=1600&q=80',
+  'https://images.unsplash.com/photo-1553778263-73a83bab9b0c?w=1600&q=80',
+  'https://images.unsplash.com/photo-1489944440615-453fc2b6a9a9?w=1600&q=80',
+  'https://images.unsplash.com/photo-1522778526097-ce0a22ceb253?w=1600&q=80',
+  'https://images.unsplash.com/photo-1543326727-cf6c39e8f84c?w=1600&q=80',
+];
+let hIdx=0, hA=document.getElementById('himg-a'), hB=document.getElementById('himg-b'), useA=true;
+function rotateHero(){
+  hIdx=(hIdx+1)%HERO_IMGS.length;
+  const nxt=useA?hB:hA, cur=useA?hA:hB;
+  nxt.style.backgroundImage=`url('${HERO_IMGS[hIdx]}')`;
+  nxt.style.opacity='1'; cur.style.opacity='0';
+  useA=!useA;
+}
+hA.style.backgroundImage=`url('${HERO_IMGS[0]}')`;
+setInterval(rotateHero,7000);
+
+/* ══════════════════════════════════════════════
+   THEME
+══════════════════════════════════════════════ */
+function toggleTheme(){
+  const t=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',t);
+  localStorage.setItem('wc26-theme',t);
+}
+const savedTheme=localStorage.getItem('wc26-theme');
+if(savedTheme) document.documentElement.setAttribute('data-theme',savedTheme);
+
+/* ══════════════════════════════════════════════
+   MATCH DATA (local fixture list)
+══════════════════════════════════════════════ */
+const MATCHES=[
+  {n:1,date:'Thu Jun 11',time:'22:00',stage:'Group A',venue:'Mexico City',home:'Mexico',away:'South Africa'},
+  {n:2,date:'Fri Jun 12',time:'05:00',stage:'Group A',venue:'Guadalajara',home:'South Korea',away:'Czechia'},
+  {n:3,date:'Fri Jun 12',time:'22:00',stage:'Group B',venue:'Toronto',home:'Canada',away:'Bosnia & Herzegovina'},
+  {n:4,date:'Sat Jun 13',time:'04:00',stage:'Group D',venue:'Los Angeles',home:'United States',away:'Paraguay'},
+  {n:5,date:'Sat Jun 13',time:'22:00',stage:'Group B',venue:'San Francisco',home:'Qatar',away:'Switzerland'},
+  {n:6,date:'Sun Jun 14',time:'01:00',stage:'Group C',venue:'New York/NJ',home:'Brazil',away:'Morocco'},
+  {n:7,date:'Sun Jun 14',time:'04:00',stage:'Group C',venue:'Boston',home:'Haiti',away:'Scotland'},
+  {n:8,date:'Sat Jun 13',time:'07:00',stage:'Group D',venue:'Vancouver',home:'Australia',away:'Türkiye'},
+  {n:9,date:'Sun Jun 14',time:'20:00',stage:'Group E',venue:'Houston',home:'Germany',away:'Curaçao'},
+  {n:10,date:'Sun Jun 14',time:'23:00',stage:'Group F',venue:'Dallas',home:'Netherlands',away:'Japan'},
+  {n:11,date:'Mon Jun 15',time:'02:00',stage:'Group E',venue:'Philadelphia',home:'Ivory Coast',away:'Ecuador'},
+  {n:12,date:'Mon Jun 15',time:'05:00',stage:'Group F',venue:'Monterrey',home:'Sweden',away:'Tunisia'},
+  {n:13,date:'Mon Jun 15',time:'19:00',stage:'Group H',venue:'Atlanta',home:'Spain',away:'Cape Verde'},
+  {n:14,date:'Mon Jun 15',time:'22:00',stage:'Group G',venue:'Vancouver',home:'Belgium',away:'Egypt'},
+  {n:15,date:'Tue Jun 16',time:'01:00',stage:'Group H',venue:'Miami',home:'Saudi Arabia',away:'Uruguay'},
+  {n:16,date:'Tue Jun 16',time:'04:00',stage:'Group G',venue:'Los Angeles',home:'Iran',away:'New Zealand'},
+  {n:17,date:'Tue Jun 16',time:'22:00',stage:'Group I',venue:'New York/NJ',home:'France',away:'Senegal'},
+  {n:18,date:'Wed Jun 17',time:'01:00',stage:'Group I',venue:'Boston',home:'Iraq',away:'Norway'},
+  {n:19,date:'Wed Jun 17',time:'04:00',stage:'Group J',venue:'Kansas City',home:'Argentina',away:'Algeria'},
+  {n:20,date:'Tue Jun 16',time:'07:00',stage:'Group J',venue:'San Francisco',home:'Austria',away:'Jordan'},
+  {n:21,date:'Wed Jun 17',time:'20:00',stage:'Group K',venue:'Houston',home:'Portugal',away:'DR Congo'},
+  {n:22,date:'Wed Jun 17',time:'23:00',stage:'Group L',venue:'Dallas',home:'England',away:'Croatia'},
+  {n:23,date:'Thu Jun 18',time:'02:00',stage:'Group L',venue:'Toronto',home:'Ghana',away:'Panama'},
+  {n:24,date:'Thu Jun 18',time:'05:00',stage:'Group K',venue:'Mexico City',home:'Uzbekistan',away:'Colombia'},
+  {n:25,date:'Thu Jun 18',time:'19:00',stage:'Group A',venue:'Atlanta',home:'Czechia',away:'South Africa'},
+  {n:26,date:'Thu Jun 18',time:'22:00',stage:'Group B',venue:'Los Angeles',home:'Switzerland',away:'Bosnia & Herzegovina'},
+  {n:27,date:'Fri Jun 19',time:'01:00',stage:'Group B',venue:'Vancouver',home:'Canada',away:'Qatar'},
+  {n:28,date:'Fri Jun 19',time:'04:00',stage:'Group A',venue:'Guadalajara',home:'Mexico',away:'South Korea'},
+  {n:29,date:'Sat Jun 20',time:'01:00',stage:'Group C',venue:'Boston',home:'Scotland',away:'Morocco'},
+  {n:30,date:'Sat Jun 20',time:'04:00',stage:'Group C',venue:'New York/NJ',home:'Brazil',away:'Haiti'},
+  {n:31,date:'Sat Jun 20',time:'19:00',stage:'Group D',venue:'Dallas',home:'United States',away:'Australia'},
+  {n:32,date:'Sat Jun 20',time:'22:00',stage:'Group D',venue:'Seattle',home:'Paraguay',away:'Türkiye'},
+  {n:33,date:'Sun Jun 21',time:'01:00',stage:'Group E',venue:'Kansas City',home:'Germany',away:'Ivory Coast'},
+  {n:34,date:'Sun Jun 21',time:'04:00',stage:'Group E',venue:'Houston',home:'Ecuador',away:'Curaçao'},
+  {n:35,date:'Sun Jun 21',time:'19:00',stage:'Group F',venue:'Miami',home:'Netherlands',away:'Sweden'},
+  {n:36,date:'Sun Jun 21',time:'22:00',stage:'Group F',venue:'Guadalajara',home:'Japan',away:'Tunisia'},
+  {n:37,date:'Mon Jun 22',time:'01:00',stage:'Group G',venue:'San Francisco',home:'Belgium',away:'New Zealand'},
+  {n:38,date:'Mon Jun 22',time:'04:00',stage:'Group G',venue:'Atlanta',home:'Egypt',away:'Iran'},
+  {n:39,date:'Mon Jun 22',time:'19:00',stage:'Group H',venue:'Boston',home:'Spain',away:'Uruguay'},
+  {n:40,date:'Mon Jun 22',time:'22:00',stage:'Group H',venue:'Seattle',home:'Cape Verde',away:'Saudi Arabia'},
+  {n:41,date:'Tue Jun 23',time:'01:00',stage:'Group I',venue:'Los Angeles',home:'France',away:'Iraq'},
+  {n:42,date:'Tue Jun 23',time:'04:00',stage:'Group I',venue:'Philadelphia',home:'Senegal',away:'Norway'},
+  {n:43,date:'Tue Jun 23',time:'19:00',stage:'Group J',venue:'New York/NJ',home:'Argentina',away:'Austria'},
+  {n:44,date:'Tue Jun 23',time:'22:00',stage:'Group J',venue:'Dallas',home:'Algeria',away:'Jordan'},
+  {n:45,date:'Wed Jun 24',time:'01:00',stage:'Group K',venue:'Vancouver',home:'Portugal',away:'Uzbekistan'},
+  {n:46,date:'Wed Jun 24',time:'04:00',stage:'Group K',venue:'Kansas City',home:'Colombia',away:'DR Congo'},
+  {n:47,date:'Wed Jun 24',time:'19:00',stage:'Group L',venue:'Miami',home:'England',away:'Ghana'},
+  {n:48,date:'Wed Jun 24',time:'22:00',stage:'Group L',venue:'Toronto',home:'Croatia',away:'Panama'},
+  {n:49,date:'Thu Jun 25',time:'19:00',stage:'Group A',venue:'Mexico City',home:'Mexico',away:'Czechia'},
+  {n:50,date:'Thu Jun 25',time:'19:00',stage:'Group A',venue:'Guadalajara',home:'South Africa',away:'South Korea'},
+  {n:51,date:'Thu Jun 25',time:'22:00',stage:'Group B',venue:'Los Angeles',home:'Canada',away:'Switzerland'},
+  {n:52,date:'Thu Jun 25',time:'22:00',stage:'Group B',venue:'San Francisco',home:'Qatar',away:'Bosnia & Herzegovina'},
+  {n:53,date:'Fri Jun 26',time:'19:00',stage:'Group C',venue:'Boston',home:'Brazil',away:'Scotland'},
+  {n:54,date:'Fri Jun 26',time:'19:00',stage:'Group C',venue:'New York/NJ',home:'Morocco',away:'Haiti'},
+  {n:55,date:'Fri Jun 26',time:'22:00',stage:'Group D',venue:'Seattle',home:'United States',away:'Türkiye'},
+  {n:56,date:'Fri Jun 26',time:'22:00',stage:'Group D',venue:'Vancouver',home:'Paraguay',away:'Australia'},
+  {n:57,date:'Sat Jun 27',time:'19:00',stage:'Group E',venue:'Houston',home:'Germany',away:'Ecuador'},
+  {n:58,date:'Sat Jun 27',time:'19:00',stage:'Group E',venue:'Philadelphia',home:'Curaçao',away:'Ivory Coast'},
+  {n:59,date:'Sat Jun 27',time:'22:00',stage:'Group F',venue:'Monterrey',home:'Netherlands',away:'Tunisia'},
+  {n:60,date:'Sat Jun 27',time:'22:00',stage:'Group F',venue:'Dallas',home:'Japan',away:'Sweden'},
+  {n:61,date:'Sun Jun 28',time:'19:00',stage:'Group G',venue:'Atlanta',home:'Belgium',away:'Iran'},
+  {n:62,date:'Sun Jun 28',time:'19:00',stage:'Group G',venue:'San Francisco',home:'New Zealand',away:'Egypt'},
+  {n:63,date:'Sun Jun 28',time:'22:00',stage:'Group H',venue:'Miami',home:'Spain',away:'Saudi Arabia'},
+  {n:64,date:'Sun Jun 28',time:'22:00',stage:'Group H',venue:'Kansas City',home:'Uruguay',away:'Cape Verde'},
+  {n:65,date:'Mon Jun 29',time:'19:00',stage:'Group I',venue:'Boston',home:'France',away:'Norway'},
+  {n:66,date:'Mon Jun 29',time:'19:00',stage:'Group I',venue:'Philadelphia',home:'Senegal',away:'Iraq'},
+  {n:67,date:'Mon Jun 29',time:'22:00',stage:'Group J',venue:'Kansas City',home:'Argentina',away:'Jordan'},
+  {n:68,date:'Mon Jun 29',time:'22:00',stage:'Group J',venue:'New York/NJ',home:'Austria',away:'Algeria'},
+  {n:69,date:'Tue Jun 30',time:'19:00',stage:'Group K',venue:'Houston',home:'Portugal',away:'Colombia'},
+  {n:70,date:'Tue Jun 30',time:'19:00',stage:'Group K',venue:'Mexico City',home:'DR Congo',away:'Uzbekistan'},
+  {n:71,date:'Tue Jun 30',time:'22:00',stage:'Group L',venue:'Dallas',home:'England',away:'Panama'},
+  {n:72,date:'Tue Jun 30',time:'22:00',stage:'Group L',venue:'Toronto',home:'Croatia',away:'Ghana'},
+  {n:73,date:'Sun Jun 28',time:'20:00',stage:'Round of 32',venue:'Los Angeles',home:'W-A1',away:'W-B2'},
+  {n:74,date:'Mon Jun 29',time:'20:00',stage:'Round of 32',venue:'Boston',home:'W-E1',away:'3rd'},
+  {n:75,date:'Tue Jun 30',time:'04:00',stage:'Round of 32',venue:'Monterrey',home:'W-F1',away:'W-C2'},
+  {n:76,date:'Mon Jun 29',time:'20:00',stage:'Round of 32',venue:'Houston',home:'W-C1',away:'W-F2'},
+  {n:77,date:'Wed Jul 1',time:'00:00',stage:'Round of 32',venue:'New York/NJ',home:'W-I1',away:'3rd'},
+  {n:78,date:'Tue Jun 30',time:'20:00',stage:'Round of 32',venue:'Dallas',home:'W-D2',away:'W-I2'},
+  {n:79,date:'Wed Jul 1',time:'04:00',stage:'Round of 32',venue:'Mexico City',home:'W-A1',away:'3rd'},
+  {n:80,date:'Wed Jul 1',time:'19:00',stage:'Round of 32',venue:'Atlanta',home:'W-L1',away:'3rd'},
+  {n:81,date:'Thu Jul 2',time:'03:00',stage:'Round of 32',venue:'San Francisco',home:'W-D1',away:'3rd'},
+  {n:82,date:'Wed Jul 1',time:'23:00',stage:'Round of 32',venue:'Seattle',home:'W-G1',away:'3rd'},
+  {n:83,date:'Fri Jul 3',time:'02:00',stage:'Round of 32',venue:'Toronto',home:'W-K1',away:'W-L2'},
+  {n:84,date:'Thu Jul 2',time:'22:00',stage:'Round of 32',venue:'Los Angeles',home:'W-H1',away:'W-J2'},
+  {n:85,date:'Fri Jul 3',time:'06:00',stage:'Round of 32',venue:'Vancouver',home:'W-B1',away:'3rd'},
+  {n:86,date:'Sat Jul 4',time:'01:00',stage:'Round of 32',venue:'Miami',home:'W-J1',away:'W-H2'},
+  {n:87,date:'Sat Jul 4',time:'04:30',stage:'Round of 32',venue:'Kansas City',home:'W-K2',away:'3rd'},
+  {n:88,date:'Fri Jul 3',time:'21:00',stage:'Round of 32',venue:'Dallas',home:'W-D2',away:'W-G2'},
+  {n:89,date:'Sun Jul 5',time:'00:00',stage:'Round of 16',venue:'Philadelphia',home:'W73',away:'W74'},
+  {n:90,date:'Sat Jul 4',time:'20:00',stage:'Round of 16',venue:'Houston',home:'W75',away:'W76'},
+  {n:91,date:'Sun Jul 5',time:'23:00',stage:'Round of 16',venue:'New York/NJ',home:'W77',away:'W78'},
+  {n:92,date:'Mon Jul 6',time:'03:00',stage:'Round of 16',venue:'Mexico City',home:'W79',away:'W80'},
+  {n:93,date:'Mon Jul 6',time:'22:00',stage:'Round of 16',venue:'Dallas',home:'W81',away:'W82'},
+  {n:94,date:'Tue Jul 7',time:'00:00',stage:'Round of 16',venue:'Seattle',home:'W83',away:'W84'},
+  {n:95,date:'Tue Jul 7',time:'19:00',stage:'Round of 16',venue:'Atlanta',home:'W85',away:'W86'},
+  {n:96,date:'Tue Jul 7',time:'23:00',stage:'Round of 16',venue:'Vancouver',home:'W87',away:'W88'},
+  {n:97,date:'Thu Jul 9',time:'23:00',stage:'Quarter-final',venue:'Boston',home:'W89',away:'W90'},
+  {n:98,date:'Fri Jul 10',time:'22:00',stage:'Quarter-final',venue:'Los Angeles',home:'W91',away:'W92'},
+  {n:99,date:'Sun Jul 12',time:'00:00',stage:'Quarter-final',venue:'Miami',home:'W93',away:'W94'},
+  {n:100,date:'Sun Jul 12',time:'04:00',stage:'Quarter-final',venue:'Kansas City',home:'W95',away:'W96'},
+  {n:101,date:'Tue Jul 14',time:'22:00',stage:'Semi-final',venue:'Dallas',home:'W97',away:'W98'},
+  {n:102,date:'Wed Jul 15',time:'22:00',stage:'Semi-final',venue:'Atlanta',home:'W99',away:'W100'},
+  {n:103,date:'Sun Jul 19',time:'00:00',stage:'Third-place play-off',venue:'Miami',home:'L101',away:'L102'},
+  {n:104,date:'Sun Jul 19',time:'22:00',stage:'Final',venue:'New York/NJ',home:'W101',away:'W102'},
+];
+
+const GROUP_MATCHES={A:[1,2,25,28,49,50],B:[3,5,26,27,51,52],C:[6,7,29,30,53,54],D:[4,8,31,32,55,56],E:[9,11,33,34,57,58],F:[10,12,35,36,59,60],G:[14,16,37,38,61,62],H:[13,15,39,40,63,64],I:[17,18,41,42,65,66],J:[19,20,43,44,67,68],K:[21,24,45,46,69,70],L:[22,23,47,48,71,72]};
+const GROUP_TEAMS={A:['Mexico','South Africa','South Korea','Czechia'],B:['Canada','Switzerland','Qatar','Bosnia & Herzegovina'],C:['Brazil','Morocco','Scotland','Haiti'],D:['United States','Paraguay','Australia','Türkiye'],E:['Germany','Ecuador','Ivory Coast','Curaçao'],F:['Netherlands','Japan','Sweden','Tunisia'],G:['Belgium','Iran','Egypt','New Zealand'],H:['Spain','Uruguay','Saudi Arabia','Cape Verde'],I:['France','Senegal','Norway','Iraq'],J:['Argentina','Austria','Algeria','Jordan'],K:['Portugal','Colombia','Uzbekistan','DR Congo'],L:['England','Croatia','Panama','Ghana']};
+const SLOT_E={74:['A','B','C','D','F'],77:['C','D','F','G','H'],79:['C','E','F','H','I'],80:['E','H','I','J','K'],81:['B','E','F','I','J'],82:['A','E','H','I','J'],85:['E','F','G','I','J'],87:['D','E','I','J','L']};
+const SLOT_F={74:'Winner Group E',77:'Winner Group I',79:'Winner Group A',80:'Winner Group L',81:'Winner Group D',82:'Winner Group G',85:'Winner Group B',87:'Winner Group K'};
+
+/* Group bg images for card headers */
+const GRP_IMGS=['https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=400&q=60','https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=400&q=60','https://images.unsplash.com/photo-1553778263-73a83bab9b0c?w=400&q=60','https://images.unsplash.com/photo-1489944440615-453fc2b6a9a9?w=400&q=60','https://images.unsplash.com/photo-1522778526097-ce0a22ceb253?w=400&q=60','https://images.unsplash.com/photo-1543326727-cf6c39e8f84c?w=400&q=60','https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=400&q=60','https://images.unsplash.com/photo-1551958219-acbc15d74ce6?w=400&q=60','https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=400&q=60','https://images.unsplash.com/photo-1517927033932-b3d18e61fb3a?w=400&q=60','https://images.unsplash.com/photo-1516802273409-68526ee1bdd6?w=400&q=60','https://images.unsplash.com/photo-1434648957308-5e6a859697e8?w=400&q=60'];
+
+/* ══════════════════════════════════════════════
+   SCORES STORE  { mn: {h, a, pen, auto} }
+══════════════════════════════════════════════ */
+const SAVE_KEY='wc26v3';
+let scores={};
+function loadScores(){try{const r=localStorage.getItem(SAVE_KEY);if(r)scores=JSON.parse(r);}catch(e){scores={};}}
+let saveT=null;
+function scheduleSave(){clearTimeout(saveT);saveT=setTimeout(()=>{try{localStorage.setItem(SAVE_KEY,JSON.stringify(scores));const t=new Date();document.getElementById('sync-time').textContent='Saved '+t.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});}catch(e){}},600);}
+
+/* ══════════════════════════════════════════════
+   LIVE DATA FETCH  — openfootball GitHub JSON
+   CORS-friendly: raw.githubusercontent.com
+══════════════════════════════════════════════ */
+const LIVE_URL='https://raw.githubusercontent.com/openfootball/worldcup.json/master/2026/worldcup.json';
+
+// Name normalisation map (openfootball → our names)
+const NAME_MAP={
+  'Czech Republic':'Czechia','Bosnia-Herzegovina':'Bosnia & Herzegovina',
+  'Bosnia & Herzegovina':'Bosnia & Herzegovina','Türkiye':'Türkiye',
+  'Turkey':'Türkiye','DR Congo':'DR Congo','Congo DR':'DR Congo',
+  'Curaçao':'Curaçao','Curacao':'Curaçao','United States':'United States',
+  'USA':'United States','South Korea':'South Korea','Korea Republic':'South Korea',
+};
+function normName(n){return NAME_MAP[n]||n;}
+
+async function fetchLive(manual=false){
+  const dot=document.getElementById('sync-dot');
+  const info=document.getElementById('sync-info');
+  const tEl=document.getElementById('sync-time');
+  dot.classList.remove('err');
+  tEl.textContent='Syncing…';
+  try{
+    const res=await fetch(LIVE_URL+'?t='+Date.now());
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const data=await res.json();
+    let updated=0;
+    data.matches.forEach(lm=>{
+      if(!lm.score||!lm.score.ft) return;
+      const [lh,la]=lm.score.ft;
+      const t1=normName(lm.team1), t2=normName(lm.team2);
+      // Find our match by home+away names
+      const m=MATCHES.find(x=>
+        x.stage.startsWith('Group')&&
+        normName(x.home)===t1&&normName(x.away)===t2
+      );
+      if(!m) return;
+      const existing=scores[m.n];
+      // Only overwrite if not manually changed by user or auto-fill
+      if(!existing||existing.auto){
+        scores[m.n]={h:String(lh),a:String(la),pen:existing?.pen||null,auto:true};
+        updated++;
+      }
+    });
+    if(updated>0){scheduleSave();recalcAll();}
+    const now=new Date();
+    tEl.textContent=(updated>0?`↑ ${updated} score${updated>1?'s':''} updated · `:'No new scores · ')+'Last sync '+now.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+    info.innerHTML=`<b>Live data</b> — auto-syncing from <b>openfootball / GitHub</b> · manual entries preserved`;
+  }catch(err){
+    dot.classList.add('err');
+    tEl.textContent='Sync failed — using saved data';
+    info.innerHTML=`<b>Offline mode</b> — could not reach live source. Enter scores manually below.`;
+  }
+}
+
+// Poll every 3 minutes
+setInterval(()=>fetchLive(false), 3*60*1000);
+
+/* ══════════════════════════════════════════════
+   COMPUTATION
+══════════════════════════════════════════════ */
+function computeGroup(g){
+  const teams=GROUP_TEAMS[g], s={};
+  teams.forEach(t=>{s[t]={p:0,w:0,d:0,l:0,gf:0,ga:0,gd:0,pts:0};});
+  GROUP_MATCHES[g].forEach(mn=>{
+    const m=MATCHES.find(x=>x.n===mn),sc=scores[mn];
+    if(!sc||sc.h===''||sc.h==null||sc.a===''||sc.a==null)return;
+    const h=parseInt(sc.h),a=parseInt(sc.a);
+    if(isNaN(h)||isNaN(a))return;
+    if(!s[m.home]||!s[m.away])return;
+    s[m.home].p++;s[m.away].p++;
+    s[m.home].gf+=h;s[m.home].ga+=a;s[m.home].gd+=h-a;
+    s[m.away].gf+=a;s[m.away].ga+=h;s[m.away].gd+=a-h;
+    if(h>a){s[m.home].w++;s[m.home].pts+=3;s[m.away].l++;}
+    else if(a>h){s[m.away].w++;s[m.away].pts+=3;s[m.home].l++;}
+    else{s[m.home].d++;s[m.away].d++;s[m.home].pts++;s[m.away].pts++;}
+  });
+  return teams.map(t=>({team:t,...s[t]})).sort((a,b)=>b.pts-a.pts||b.gd-a.gd||b.gf-a.gf||(a.team<b.team?-1:1));
+}
+
+function getWinner(mn){
+  const m=MATCHES.find(x=>x.n===mn),sc=scores[mn];
+  if(!sc||sc.h===''||sc.h==null||sc.a===''||sc.a==null)return null;
+  const h=parseInt(sc.h),a=parseInt(sc.a);
+  if(isNaN(h)||isNaN(a))return null;
+  const hN=resolve(m.home),aN=resolve(m.away);
+  if(h>a)return hN;if(a>h)return aN;
+  if(sc.pen==='H')return hN;if(sc.pen==='A')return aN;
+  return null;
+}
+function getLoser(mn){
+  const m=MATCHES.find(x=>x.n===mn),sc=scores[mn];
+  if(!sc||sc.h===''||sc.h==null||sc.a===''||sc.a==null)return null;
+  const h=parseInt(sc.h),a=parseInt(sc.a);
+  if(isNaN(h)||isNaN(a))return null;
+  const hN=resolve(m.home),aN=resolve(m.away);
+  if(h>a)return aN;if(a>h)return hN;
+  if(sc.pen==='H')return aN;if(sc.pen==='A')return hN;
+  return null;
+}
+function resolve(ph){
+  if(!ph)return null;
+  const wm=ph.match(/^W(\d+)$/);if(wm)return getWinner(+wm[1]);
+  const lm=ph.match(/^L(\d+)$/);if(lm)return getLoser(+lm[1]);
+  const gm=ph.match(/^W-([A-L])(\d)$/);
+  if(gm){const s=computeGroup(gm[1]);return s[+gm[2]-1]?.team||null;}
+  if(ph==='3rd')return null;
+  return ph;
+}
+function rTeams(m){return{home:resolve(m.home)||m.home,away:resolve(m.away)||m.away};}
+function isTBDph(ph){return ph&&(ph.startsWith('W')||ph.startsWith('L')||ph==='3rd');}
+function computeThirds(){
+  return Object.keys(GROUP_TEAMS).map(g=>{
+    const s=computeGroup(g),t=s[2];
+    return{grp:g,team:t?.team||'—',pts:t?.pts||0,gd:t?.gd||0,gf:t?.gf||0,p:t?.p||0,w:t?.w||0,d:t?.d||0,l:t?.l||0,ga:t?.ga||0};
+  }).sort((a,b)=>b.pts-a.pts||b.gd-a.gd||b.gf-a.gf).map((t,i)=>({...t,rank:i+1,qualified:i<8}));
+}
+
+/* ══════════════════════════════════════════════
+   RENDER MATCHES
+══════════════════════════════════════════════ */
+let curFilter='all';
+function badgeCls(stage){if(stage.startsWith('Group'))return'bg';if(stage==='Round of 32')return'br32';if(stage==='Round of 16')return'br16';if(stage.startsWith('Quarter'))return'bqf';if(stage.startsWith('Semi'))return'bsf';return'bfin';}
+function badgeLbl(stage){if(stage.startsWith('Group'))return'GRP '+stage.slice(-1);return stage.replace('Round of ','R').replace('-place play-off','').toUpperCase();}
+
+function renderMatches(){
+  const list=document.getElementById('match-list');
+  list.innerHTML='';
+  const filtered=curFilter==='all'?MATCHES:MATCHES.filter(m=>m.stage.includes(curFilter));
+  let lastStage='';
+  filtered.forEach(m=>{
+    if(m.stage!==lastStage){
+      const sep=document.createElement('div');sep.className='stage-sep';
+      sep.textContent=m.stage.startsWith('Group')?'GROUP STAGE':m.stage.toUpperCase();
+      list.appendChild(sep);lastStage=m.stage;
+    }
+    const isKO=!m.stage.startsWith('Group');
+    const sc=scores[m.n]||{h:'',a:'',pen:null,auto:false};
+    const{home,away}=rTeams(m);
+    const dis=isTBDph(m.home)&&!resolve(m.home);
+    const hasScore=sc.h!==''&&sc.h!=null&&sc.a!==''&&sc.a!=null;
+    const card=document.createElement('div');
+    card.className='match-card'+(hasScore?' finished':'');
+    card.innerHTML=`
+      <div class="mc-date">
+        <div class="mc-num">#${m.n} <span class="sbadge ${badgeCls(m.stage)}">${badgeLbl(m.stage)}</span></div>
+        <div class="mc-day">${m.date}</div>
+        <div class="mc-time">${m.time} Cairo</div>
+      </div>
+      <div class="mc-home">${home}</div>
+      <div class="mc-score">
+        <input type="number" min="0" max="99" class="score-inp${dis?' dis':''}${sc.auto?' auto-filled':''}"
+          id="sh-${m.n}" value="${sc.h}" placeholder="–"
+          ${dis?'disabled':''} oninput="onScore(${m.n})">
+        <span class="score-dash">–</span>
+        <input type="number" min="0" max="99" class="score-inp${dis?' dis':''}${sc.auto?' auto-filled':''}"
+          id="sa-${m.n}" value="${sc.a}" placeholder="–"
+          ${dis?'disabled':''} oninput="onScore(${m.n})">
+        ${isKO?`<select class="pen-sel" id="pen-${m.n}" onchange="onPen(${m.n})"><option value="">P?</option><option value="H"${sc.pen==='H'?' selected':''}>H</option><option value="A"${sc.pen==='A'?' selected':''}>A</option></select>`:''}
+      </div>
+      <div class="mc-away">${away}</div>
+      <div class="mc-venue">${m.venue}</div>`;
+    list.appendChild(card);
+  });
+  updateStats();
+}
+
+function onScore(mn){
+  if(!scores[mn])scores[mn]={h:'',a:'',pen:null,auto:false};
+  scores[mn].h=document.getElementById('sh-'+mn)?.value??'';
+  scores[mn].a=document.getElementById('sa-'+mn)?.value??'';
+  scores[mn].auto=false; // manual edit clears auto flag
+  scheduleSave();recalcAll();
+}
+function onPen(mn){
+  if(!scores[mn])scores[mn]={h:'',a:'',pen:null,auto:false};
+  scores[mn].pen=document.getElementById('pen-'+mn)?.value||null;
+  scheduleSave();recalcAll();
+}
+function updateStats(){
+  let g=0,p=0;
+  MATCHES.forEach(m=>{const sc=scores[m.n];if(sc&&sc.h!==''&&sc.h!=null&&sc.a!==''&&sc.a!=null){const h=parseInt(sc.h),a=parseInt(sc.a);if(!isNaN(h)&&!isNaN(a)){g+=h+a;p++;}}});
+  document.getElementById('goals-v').textContent=g;
+  document.getElementById('played-v').textContent=p;
+}
+function filterStage(f,btn){curFilter=f;document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderMatches();}
+
+/* ══════════════════════════════════════════════
+   RENDER STANDINGS
+══════════════════════════════════════════════ */
+function renderStandings(){
+  const grid=document.getElementById('groups-grid');grid.innerHTML='';
+  const cls=['rq1','rq2','rq3','rout'];
+  Object.keys(GROUP_TEAMS).forEach((g,gi)=>{
+    const s=computeGroup(g);
+    const card=document.createElement('div');card.className='group-card';
+    card.innerHTML=`<div class="group-head">
+      <div class="group-head-img" style="background-image:url('${GRP_IMGS[gi%GRP_IMGS.length]}')"></div>
+      <div class="group-letter">${g}</div>
+      <div class="group-meta">
+        <div class="group-name">GROUP ${g}</div>
+        <div class="group-sub">4 TEAMS · 6 MATCHES</div>
+      </div>
+    </div>
+    <table class="gtable">
+      <thead><tr><th>TEAM</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>PTS</th></tr></thead>
+      <tbody>${s.map((t,i)=>`<tr class="${cls[i]}"><td>${t.team}</td><td>${t.p}</td><td>${t.w}</td><td>${t.d}</td><td>${t.l}</td><td>${t.gf}</td><td>${t.ga}</td><td class="${t.gd>0?'gdp':t.gd<0?'gdn':''}">${t.gd>0?'+'+t.gd:t.gd}</td><td class="pts-v">${t.pts}</td></tr>`).join('')}</tbody>
+    </table>`;
+    grid.appendChild(card);
+  });
+}
+
+/* ══════════════════════════════════════════════
+   RENDER BRACKET
+══════════════════════════════════════════════ */
+function bkHTML(m,cls=''){
+  const{home,away}=rTeams(m);
+  const sc=scores[m.n]||{};
+  const hS=(sc.h!==''&&sc.h!=null)?sc.h:'',aS=(sc.a!==''&&sc.a!=null)?sc.a:'';
+  const winner=getWinner(m.n);
+  const hW=winner&&winner===home,aW=winner&&winner===away;
+  const hTBD=!home||isTBDph(m.home),aTBD=!away||isTBDph(m.away);
+  return`<div class="bk-m ${cls}"><div class="bk-t ${hTBD?'tbd':''} ${hW?'win':''}">${home||'TBD'}<span class="bk-sc">${hS}</span></div><div class="bk-div"></div><div class="bk-t ${aTBD?'tbd':''} ${aW?'win':''}">${away||'TBD'}<span class="bk-sc">${aS}</span></div><div class="bk-info">#${m.n}·${m.date}·${m.venue}</div></div>`;
+}
+function renderBracket(){
+  const r32=MATCHES.filter(m=>m.stage==='Round of 32');
+  const r16=MATCHES.filter(m=>m.stage==='Round of 16');
+  const qf=MATCHES.filter(m=>m.stage==='Quarter-final');
+  const sf=MATCHES.filter(m=>m.stage==='Semi-final');
+  const fin=MATCHES.filter(m=>m.stage==='Final');
+  const tp=MATCHES.filter(m=>m.stage==='Third-place play-off');
+  const champ=getWinner(104)||'TBD';
+  document.getElementById('bracket-content').innerHTML=`
+    <div><div class="bk-col-label">R32 #1–8</div>${r32.slice(0,8).map(m=>bkHTML(m)).join('')}</div>
+    <div><div class="bk-col-label">R32 #9–16</div>${r32.slice(8).map(m=>bkHTML(m)).join('')}</div>
+    <div><div class="bk-col-label">ROUND OF 16</div>${r16.map(m=>bkHTML(m)).join('')}</div>
+    <div><div class="bk-col-label">QUARTER-FINALS</div>${qf.map(m=>bkHTML(m)).join('')}<div class="bk-col-label" style="margin-top:12px">SEMI-FINALS</div>${sf.map(m=>bkHTML(m)).join('')}</div>
+    <div><div class="bk-col-label">FINAL</div>${fin.map(m=>bkHTML(m,'bk-fin')).join('')}<div class="champ"><div class="champ-l">🏆 CHAMPION</div><div class="champ-n">${champ}</div></div><div class="bk-col-label" style="margin-top:12px">3RD PLACE</div>${tp.map(m=>bkHTML(m)).join('')}</div>`;
+}
+
+/* ══════════════════════════════════════════════
+   RENDER THIRD
+══════════════════════════════════════════════ */
+function renderThird(){
+  const thirds=computeThirds();
+  document.getElementById('third-body').innerHTML=thirds.map(t=>`<tr class="${t.qualified?'qy':''}"><td><span class="rk-n">${t.rank}</span></td><td><span class="grp-t">${t.grp}</span></td><td>${t.team}</td><td>${t.p}</td><td>${t.w}</td><td>${t.d}</td><td>${t.l}</td><td>${t.gf}</td><td>${t.ga}</td><td class="${t.gd>0?'gdp':t.gd<0?'gdn':''}">${t.gd>0?'+'+t.gd:t.gd}</td><td style="font-weight:700;color:var(--gold-l)">${t.pts}</td><td><span class="${t.qualified?'qual-y':'qual-n'}">${t.qualified?'✓ YES':'✗ NO'}</span></td></tr>`).join('');
+  const qG=thirds.filter(t=>t.qualified).map(t=>t.grp);
+  const asgn={};Object.keys(SLOT_E).forEach(mn=>{const e=SLOT_E[mn].filter(g=>qG.includes(g));const p=e.find(g=>!Object.values(asgn).includes(g));if(p)asgn[mn]=p;});
+  document.getElementById('slot-body').innerHTML=Object.keys(SLOT_E).map(mn=>{
+    const grp=asgn[mn],team=grp?thirds.find(t=>t.grp===grp)?.team||'—':'—',ok=!!grp;
+    return`<tr><td style="font-weight:700">#${mn}</td><td style="font-size:12px;color:var(--text-sub)">${SLOT_F[mn]}</td><td style="font-size:12px;color:var(--text-muted)">${SLOT_E[mn].join(' / ')}</td><td style="font-weight:600;color:var(--gold-l)">${team}</td><td><span class="${ok?'qual-y':'qual-n'}">${ok?'✓ OK':'Pending'}</span></td></tr>`;
+  }).join('');
+}
+
+/* ══════════════════════════════════════════════
+   MASTER RECALC
+══════════════════════════════════════════════ */
+function recalcAll(){renderMatches();renderStandings();renderBracket();renderThird();}
+
+/* ══════════════════════════════════════════════
+   TAB
+══════════════════════════════════════════════ */
+function showTab(id,btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  if(btn)btn.classList.add('active');
+}
+
+/* ══════════════════════════════════════════════
+   INIT
+══════════════════════════════════════════════ */
+loadScores();
+if(Object.keys(scores).length>0) document.getElementById('sync-time').textContent='Loaded saved data';
+recalcAll();
+fetchLive(false);
+</script>
+
+
+</body></html>
